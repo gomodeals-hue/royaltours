@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Royal Tours and Travels — Premier Tour Operator & Holiday Packages | Coimbatore</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Playfair Display (Editorial Serif) & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        sky: {
+                            brand: '#6896BC',
+                            dark: '#4C799E',
+                            deep: '#2D5575',
+                            soft: '#EAF2F8'
+                        },
+                        sand: {
+                            wheat: '#E6BC86',
+                            light: '#F5E6CC'
+                        },
+                        darknavy: '#0E1721'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFFFF;
+            color: #1a1a1a;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Torn Paper Mask Edge - Reusable SVG Mask Technique */
+        .torn-edge-top {
+            filter: drop-shadow(0px -4px 6px rgba(0, 0, 0, 0.08));
+        }
+
+        .torn-edge-bottom {
+            filter: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Hardware-accelerated smooth video background */
+        .hero-bg-video {
+            will-change: opacity, transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Floating Polaroid Card Styles */
+        .polaroid-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.18), 0 5px 15px rgba(0, 0, 0, 0.08);
+            transform-origin: center bottom;
+        }
+
+        .polaroid-card:hover {
+            transform: translateY(-20px) scale(1.08) rotate(0deg) !important;
+            z-index: 50 !important;
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F1F4F8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #A0B9CF;
+            border-radius: 4px;
+        }
+
+        /* Subtle Marquee Animation */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 28s linear infinite;
+        }
+
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-amber-200 selection:text-neutral-900 bg-white">
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast"
+        class="fixed top-6 right-6 z-[60] transform translate-y-[-150%] opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-neutral-900 text-white px-5 py-3 rounded-full shadow-2xl border border-white/10 text-xs font-semibold">
+        <div class="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+        </div>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- ==================== STICKY NAVIGATION BAR ==================== -->
+    <nav id="main-navbar" class="fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 py-5 sm:py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div class="flex items-center justify-between">
+
+                <!-- Logo -->
+                <a href="#hero"
+                    class="font-editorial text-xl sm:text-2xl md:text-3xl text-white font-bold tracking-tight hover:opacity-90 transition">
+                    The Royal Tours <span class="font-light italic text-amber-200">&amp; Travels</span>
+                </a>
+
+                <!-- Center Nav Pill (Frosted Glass) -->
+                <div
+                    class="hidden md:flex items-center space-x-7 bg-white/15 backdrop-blur-md px-7 py-2.5 rounded-full border border-white/25 text-white text-xs font-medium shadow-sm">
+                    <a href="index.html" class="text-white font-bold hover:text-amber-200 transition">Home</a>
+                    <a href="about.html" class="hover:text-amber-200 transition">About Us</a>
+                    <a href="packages.html" class="hover:text-amber-200 transition">Packages</a>
+                    <a href="services.html" class="hover:text-amber-200 transition">Services</a>
+                    <a href="contact.html" class="hover:text-amber-200 transition">Contact</a>
+                </div>
+
+                <!-- Right CTA: Sign In Pill with Arrow -->
+                <div class="flex items-center space-x-3">
+                    <a href="packages.html"
+                        class="group flex items-center space-x-2.5 bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold pl-5 pr-2 py-1.5 rounded-full transition-all duration-200 shadow-md border border-white/10">
+                        <span>Book Tour</span>
+                        <div
+                            class="w-6 h-6 rounded-full bg-white/15 group-hover:bg-white text-white group-hover:text-neutral-900 flex items-center justify-center transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </div>
+                    </a>
+
+                    <!-- Mobile Nav Hamburger -->
+                    <button onclick="toggleMobileMenu()"
+                        class="md:hidden text-white p-2 rounded-full bg-white/20 backdrop-blur-md">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown -->
+            <div id="mobile-menu"
+                class="hidden md:hidden mt-3 p-4 bg-[#121B24]/95 backdrop-blur-xl rounded-2xl text-white text-sm flex-col space-y-3 border border-white/10 shadow-xl">
+                <a href="index.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Home</a>
+                <a href="about.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">About Us</a>
+                <a href="packages.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Packages</a>
+                <a href="services.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Services</a>
+                <a href="contact.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== SECTION 1: HERO (TRAVEL THE WORLD IN ROYAL COMFORT) ==================== -->
+    <header id="hero"
+        class="relative w-full min-h-[750px] md:min-h-[860px] lg:min-h-[920px] flex flex-col justify-between overflow-hidden bg-[#121B24]">
+
+        <!-- Hero Background Video Crossfade Carousel -->
+        <div class="absolute inset-0 z-0 overflow-hidden bg-[#121B24]">
+            <!-- Video 1 (Active on load) -->
+            <video id="hero-vid-0" autoplay muted loop playsinline preload="auto"
+                class="hero-bg-video absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100 filter brightness-[0.82] contrast-[1.05]">
+                <source src="src/hero1.mp4" type="video/mp4" />
+            </video>
+            <!-- Video 2 (Loaded on demand) -->
+            <video id="hero-vid-1" muted loop playsinline preload="none"
+                class="hero-bg-video pointer-events-none absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 filter brightness-[0.82] contrast-[1.05]">
+                <source src="src/hero2.mp4" type="video/mp4" />
+            </video>
+            <!-- Video 3 (Loaded on demand) -->
+            <video id="hero-vid-2" muted loop playsinline preload="none"
+                class="hero-bg-video pointer-events-none absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 filter brightness-[0.82] contrast-[1.05]">
+                <source src="src/hero3.mp4" type="video/mp4" />
+            </video>
+            <!-- Video 4 (Loaded on demand) -->
+            <video id="hero-vid-3" muted loop playsinline preload="none"
+                class="hero-bg-video pointer-events-none absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 filter brightness-[0.82] contrast-[1.05]">
+                <source src="src/hero4.mp4" type="video/mp4" />
+            </video>
+
+            <!-- Cinematic Soft Gradient Overlays for High Legibility -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/50"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-transparent"></div>
+        </div>
+
+        <!-- Hero Content Body -->
+        <div class="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-28 sm:pt-36 md:pt-40 pb-20 md:pb-28">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- Big Editorial Headline (Left Column) -->
+                <div class="lg:col-span-8">
+                    <h1
+                        class="font-editorial text-5xl sm:text-6xl md:text-7xl lg:text-[84px] text-white font-normal leading-[1.05] tracking-tight drop-shadow-lg">
+                        Travel the World<br />
+                        <span class="italic font-light">with</span> Royal Comfort
+                    </h1>
+                </div>
+
+                <!-- Description + Explore Pill Button (Right Column) -->
+                <div class="lg:col-span-4 lg:pt-4 flex flex-col items-start lg:items-end">
+                    <p
+                        class="text-white/90 text-xs sm:text-sm font-normal leading-relaxed max-w-xs text-left lg:text-left mb-6 drop-shadow-md">
+                        Your trusted travel agency for curated international tours, bespoke holiday packages, flight bookings, and unforgettable luxury journeys worldwide.
+                    </p>
+
+                    <a href="#packages"
+                        class="group inline-flex items-center space-x-3 bg-white hover:bg-neutral-100 text-neutral-900 text-xs font-semibold pl-5 pr-1.5 py-1.5 rounded-full transition-all duration-200 shadow-2xl hover:scale-105">
+                        <span>Explore Tour Packages</span>
+                        <div
+                            class="w-7 h-7 rounded-full bg-neutral-900 text-white flex items-center justify-center group-hover:bg-amber-500 group-hover:text-neutral-950 transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PERFECT WAVE BOTTOM EDGE (White SVG divider into Section 2) -->
+        <div class="relative z-30 w-full leading-none -mb-[1px] torn-edge-bottom">
+            <svg class="w-full h-10 sm:h-16 md:h-20 text-white fill-current block" viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+    </header>
+
+
+    <!-- ==================== SECTION 2: FIND YOUR PERFECT TRIP ==================== -->
+    <section id="about" class="relative z-20 bg-white pt-14 pb-0 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+
+            <!-- Editorial Layout: "Find Your Perfect" [Middle Description] "Trip" -->
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-16">
+
+                <!-- Left Side: "Find Your" / "Perfect" -->
+                <div
+                    class="font-editorial text-5xl sm:text-6xl md:text-7xl lg:text-[76px] text-neutral-900 font-normal leading-[1.08] tracking-tight">
+                    Find Your<br />
+                    <span class="ml-4 sm:ml-12 italic font-light">Perfect</span>
+                </div>
+
+                <!-- Center: Editorial Description Box -->
+                <div class="max-w-xs md:px-4">
+                    <p class="text-neutral-600 text-xs sm:text-[13px] leading-relaxed font-normal">
+                        Based in Coimbatore, Tamil Nadu, The Royal Tours & Travels specializes in bespoke domestic and international tour packages with personalized care.
+                    </p>
+                </div>
+
+                <!-- Right Side: "Trip" -->
+                <div
+                    class="font-editorial text-5xl sm:text-6xl md:text-7xl lg:text-[76px] text-neutral-900 font-normal self-end md:self-auto">
+                    Journey
+                </div>
+            </div>
+
+            <!-- Main Visual Grid: Tilted Postcard Illustration & Mission Card -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-4">
+
+                <!-- Left Column: Tilted Landscape Illustration Card -->
+                <div class="md:col-span-5 flex justify-center md:justify-start">
+                    <a href="package-ooty.html" class="relative group cursor-pointer block">
+                        <!-- Tilted Frame matching the mockup (-8deg tilt) -->
+                        <div
+                            class="w-64 sm:w-72 lg:w-80 p-3 bg-white rounded-2xl shadow-2xl border border-neutral-150 transform -rotate-6 group-hover:rotate-0 group-hover:scale-105 transition-all duration-500">
+
+                            <div class="relative rounded-xl overflow-hidden aspect-[4/4.5] bg-sand-wheat/20">
+                                <img src="https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80"
+                                    alt="Tea plantations and lush rolling hills in Nilgiris Ooty"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent">
+                                </div>
+
+                                <!-- Floating Stamp / Tag -->
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-neutral-900 shadow-md flex items-center space-x-1">
+                                    <i data-lucide="map-pin" class="w-3 h-3 text-amber-600"></i>
+                                    <span>Nilgiris &amp; Ooty</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-3 px-1 flex items-center justify-between text-neutral-800">
+                                <span class="font-editorial text-sm font-bold">Series No. 01</span>
+                                <span class="text-[11px] text-neutral-500 font-medium">Hill Station Escapes</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Right Column: Explorer Copy and Statistics -->
+                <div class="md:col-span-7 space-y-6">
+                    <h3 class="font-editorial text-2xl sm:text-3xl lg:text-4xl text-neutral-900 leading-snug">
+                        We create safe, economical, and memorable travel experiences across India and the globe.
+                    </h3>
+
+                    <p class="text-neutral-600 text-xs sm:text-sm leading-relaxed max-w-xl">
+                        Incepted in 2022 and managed with dedicated hospitality in Coimbatore, The Royal Tours and Travels delivers complete travel solutions. From family vacations in Ooty and spiritual pilgrimages in Rameshwaram to exotic international tours in London, Paris, Vietnam, and Cambodia — we customize every itinerary to your budget and passion.
+                    </p>
+
+                    <!-- Metrics Row -->
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-neutral-100">
+                        <div>
+                            <div class="font-editorial text-2xl sm:text-3xl font-bold text-neutral-900">50+</div>
+                            <div class="text-[11px] text-neutral-500 mt-0.5">Tour Destinations</div>
+                        </div>
+                        <div>
+                            <div class="font-editorial text-2xl sm:text-3xl font-bold text-neutral-900">100%</div>
+                            <div class="text-[11px] text-neutral-500 mt-0.5">Custom Itineraries</div>
+                        </div>
+                        <div>
+                            <div class="font-editorial text-2xl sm:text-3xl font-bold text-neutral-900">99.4%</div>
+                            <div class="text-[11px] text-neutral-500 mt-0.5">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PERFECT WAVE TRANSITION (White into Deep Azure Sky Blue Packages Section) -->
+        <div class="relative w-full leading-none -mb-[1px] mt-16 sm:mt-20">
+            <svg class="w-full h-12 sm:h-16 md:h-20 text-[#35658C] fill-current block" viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ==================== SECTION 3: TOUR PACKAGES (POLAROID STACK) ==================== -->
+    <section id="packages" class="relative z-10 bg-[#35658C] pt-8 sm:pt-12 pb-0 text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+
+            <!-- Section Header Row -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+
+                <div>
+                    <h2
+                        class="font-editorial text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-tight">
+                        Holiday &amp; Tour<br />
+                        Packages
+                    </h2>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <p class="text-white/80 text-xs sm:text-sm max-w-xs leading-relaxed">
+                        Handcrafted holiday packages featuring hill stations, heritage tours, and global destinations.
+                    </p>
+
+                    <!-- View All Packages Link Button -->
+                    <a href="packages.html"
+                        class="inline-flex items-center space-x-2 bg-white/20 hover:bg-white text-white hover:text-neutral-900 text-xs font-semibold px-4 py-2 rounded-full transition backdrop-blur-md shadow-md">
+                        <span>View All Packages</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </a>
+
+                    <!-- Carousel Arrow Buttons -->
+                    <div class="flex items-center space-x-2">
+                        <button onclick="shufflePolaroids(-1)"
+                            class="w-9 h-9 rounded-full bg-white/20 hover:bg-white text-white hover:text-neutral-900 flex items-center justify-center transition backdrop-blur-md shadow-md"
+                            title="Previous Package">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="shufflePolaroids(1)"
+                            class="w-9 h-9 rounded-full bg-white/20 hover:bg-white text-white hover:text-neutral-900 flex items-center justify-center transition backdrop-blur-md shadow-md"
+                            title="Next Package">
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Fanned Polaroid Cards Stack -->
+            <div class="relative min-h-[380px] sm:min-h-[440px] md:min-h-[460px] flex items-center justify-center pt-2 pb-8">
+
+                <div id="polaroid-container"
+                    class="relative w-full max-w-5xl flex flex-wrap md:flex-nowrap justify-center items-center gap-4 sm:gap-2 md:gap-0">
+                    <!-- Populated dynamically with ALL 9 packages -->
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PERFECT WAVE TRANSITION (Azure Blue into White Adventures Section) -->
+        <div class="relative z-30 w-full leading-none -mb-[1px] mt-8 sm:mt-12">
+            <svg class="w-full h-12 sm:h-16 md:h-20 text-white fill-current block" viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ==================== SECTION 4: COMPLETE TRAVEL SERVICES & HORIZON ==================== -->
+    <section id="services" class="relative z-20 bg-white pt-10 pb-0 overflow-hidden">
+
+        <!-- Title & Services Overview -->
+        <div class="max-w-5xl mx-auto px-4 text-center mb-12">
+            <h2 class="font-editorial text-4xl sm:text-5xl lg:text-6xl text-neutral-900 tracking-tight leading-tight">
+                Complete Travel Services<br />
+                Under One Roof
+            </h2>
+
+            <p class="text-neutral-500 text-xs sm:text-sm mt-3 max-w-lg mx-auto">
+                The Royal Tours &amp; Travels offers comprehensive travel assistance so you can explore with complete peace of mind.
+            </p>
+
+            <!-- 6 Feature Services Cards Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mt-8 text-left">
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 hover:shadow-md transition">
+                    <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-2.5">
+                        <i data-lucide="plane" class="w-4 h-4"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-neutral-900">Flight Booking</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Domestic &amp; global air ticketing</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 hover:shadow-md transition">
+                    <div class="w-8 h-8 rounded-xl bg-sky-500/10 text-[#35658C] flex items-center justify-center mb-2.5">
+                        <i data-lucide="hotel" class="w-4 h-4"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-neutral-900">Hotel &amp; Resort</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Boutique stays &amp; luxury suites</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 hover:shadow-md transition">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center mb-2.5">
+                        <i data-lucide="car" class="w-4 h-4"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-neutral-900">Car &amp; Coach</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Rental vehicles &amp; tour buses</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 hover:shadow-md transition">
+                    <div class="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center mb-2.5">
+                        <i data-lucide="file-check" class="w-4 h-4"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-neutral-900">Visa &amp; Passport</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Hassle-free documentation</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 hover:shadow-md transition">
+                    <div class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center mb-2.5">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-neutral-900">Travel Insurance</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Comprehensive safety coverage</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 hover:shadow-md transition">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center mb-2.5">
+                        <i data-lucide="train" class="w-4 h-4"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-neutral-900">Rail &amp; Bus Tickets</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Instant transit reservations</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explorer Image Layer -->
+        <div class="relative w-full max-w-6xl mx-auto px-4 flex flex-col items-center">
+            <div class="relative z-10 w-full max-w-3xl -mb-10 sm:-mb-16">
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=85"
+                    alt="Travelers exploring scenic world destinations"
+                    class="w-full h-64 sm:h-80 md:h-96 object-cover rounded-3xl shadow-2xl filter contrast-[1.05]" />
+            </div>
+        </div>
+
+        <!-- Curved Horizon Banner with Azure Gradient -->
+        <div
+            class="relative w-full bg-gradient-to-b from-[#3E749C] to-[#254C6B] text-white pt-24 sm:pt-32 pb-24 px-4 overflow-hidden" id="contact">
+
+            <!-- Decorative Circular Glow -->
+            <div
+                class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-white/10 rounded-full blur-3xl pointer-events-none">
+            </div>
+
+            <div class="relative z-10 max-w-3xl mx-auto text-center space-y-6">
+                <h3
+                    class="font-editorial text-3xl sm:text-4xl md:text-5xl font-normal leading-tight text-white tracking-tight">
+                    Plan your dream vacation with<br class="hidden sm:inline" />
+                    The Royal Tours &amp; Travels<br class="hidden sm:inline" />
+                    in Coimbatore.
+                </h3>
+
+                <p class="text-white/80 text-xs sm:text-sm max-w-md mx-auto">
+                    Get in touch with our travel consultants to create your personalized custom package.
+                </p>
+
+                <div class="pt-2">
+                    <button onclick="openAuthModal()"
+                        class="inline-flex items-center space-x-2 bg-white hover:bg-neutral-100 text-neutral-900 text-xs font-semibold pl-5 pr-2 py-2 rounded-full transition-all shadow-xl hover:scale-105">
+                        <span>Send Booking Enquiry</span>
+                        <div class="w-6 h-6 rounded-full bg-neutral-900 text-white flex items-center justify-center">
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PERFECT WAVE BOTTOM EDGE DIVIDER (White footer transition) -->
+            <div class="absolute bottom-0 inset-x-0 w-full leading-none -mb-[1px]">
+                <svg class="w-full h-8 sm:h-12 md:h-16 text-white fill-current block" viewBox="0 0 1440 90"
+                    preserveAspectRatio="none">
+                    <path
+                        d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-white text-neutral-900 py-12 px-4 sm:px-6 lg:px-10 border-t border-neutral-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+
+            <div class="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-3 text-center sm:text-left">
+                <span class="font-editorial text-2xl font-bold">The Royal Tours <span class="font-light italic text-amber-600">&amp; Travels</span></span>
+                <span class="text-xs text-neutral-400">| Coimbatore, Tamil Nadu</span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-neutral-600 font-medium">
+                <a href="index.html" class="hover:text-neutral-950 transition">Home</a>
+                <a href="about.html" class="hover:text-neutral-950 transition">About Us</a>
+                <a href="packages.html" class="hover:text-neutral-950 transition">Tour Packages</a>
+                <a href="services.html" class="hover:text-neutral-950 transition">Services</a>
+                <a href="contact.html" class="hover:text-neutral-950 transition">Contact</a>
+            </div>
+
+            <div class="text-xs text-neutral-400 text-center sm:text-right">
+                © 2026 The Royal Tours and Travels. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ==================== MODAL: PACKAGE / ADVENTURE DETAILS ==================== -->
+    <div id="modal-package"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all">
+            <div class="relative h-56 bg-neutral-900">
+                <img id="modal-img" src="" alt="Trip Image" class="w-full h-full object-cover" />
+                <button onclick="closeModal('modal-package')"
+                    class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+                <div class="absolute bottom-4 left-4 right-4 text-white">
+                    <span id="modal-duration" class="text-[11px] font-bold uppercase tracking-wider text-amber-300">5
+                        Days / 4 Nights</span>
+                    <h3 id="modal-title" class="font-editorial text-2xl font-bold">Package Name</h3>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <p id="modal-desc" class="text-xs sm:text-sm text-neutral-600 leading-relaxed"></p>
+
+                <div class="grid grid-cols-3 gap-3 py-3 border-y border-neutral-100 text-xs">
+                    <div>
+                        <span class="block text-neutral-400 text-[10px] uppercase font-bold">Inclusions</span>
+                        <span class="font-bold text-neutral-800">Hotel + Cab + Meals</span>
+                    </div>
+                    <div>
+                        <span class="block text-neutral-400 text-[10px] uppercase font-bold">Pricing</span>
+                        <span id="modal-price" class="font-bold text-amber-700 text-xs">Enquire for Best Price</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-3 pt-2">
+                    <a id="modal-page-link" href="packages.html"
+                        class="text-xs font-bold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 px-5 py-3 rounded-full transition">
+                        View Itinerary
+                    </a>
+                    <button onclick="bookSpot()"
+                        class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-bold px-6 py-3 rounded-full transition shadow-md">
+                        Enquire Package
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== MODAL: SIGN IN / EXPEDITION CLUB ==================== -->
+    <div id="modal-auth" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('modal-auth')"
+                class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="font-editorial text-2xl font-bold text-neutral-900">The Royal Tours &amp; Travels</span>
+                <p class="text-xs text-neutral-500 mt-1">Send a direct enquiry or request a custom itinerary quote.
+                </p>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Your Full Name</label>
+                    <input type="text" required placeholder="e.g. Anand Kumar"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Phone / WhatsApp Number</label>
+                    <input type="tel" required placeholder="+91 98765 43210"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Destination / Package</label>
+                    <input type="text" required placeholder="e.g. Ooty, Paris & London, Vietnam"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-[#121B24] hover:bg-neutral-800 text-white font-bold text-xs py-3.5 rounded-full transition shadow-md flex items-center justify-center space-x-2">
+                    <span>Enquire Now</span>
+                    <i data-lucide="send" class="w-4 h-4 text-amber-300"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // Modal Handlers
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function openAuthModal() {
+            openModal('modal-auth');
+        }
+
+        function openPackageDetail(title, price, duration, img, desc, pageUrl) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-price').textContent = price;
+            document.getElementById('modal-duration').textContent = duration;
+            document.getElementById('modal-img').src = img;
+            document.getElementById('modal-desc').textContent = desc;
+            const pageLink = document.getElementById('modal-page-link');
+            if (pageLink) {
+                pageLink.href = pageUrl || 'packages.html';
+            }
+            openModal('modal-package');
+            lucide.createIcons();
+        }
+
+        function openStoryModal(topic) {
+            openPackageDetail(
+                topic,
+                'From $350',
+                'Curated 4-Day Journey',
+                'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80',
+                'Immerse in handcrafted backcountry paths, secret tasting cellars, and cliffside panoramas guided by passionate local naturalists.'
+            );
+        }
+
+        function bookSpot() {
+            closeModal('modal-package');
+            showToast("🎉 Thank you! Your booking request has been sent to The Royal Tours & Travels.");
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            closeModal('modal-auth');
+            showToast("✨ Thank you! Your enquiry has been received. Our team will contact you shortly.");
+        }
+
+        // ==================== DYNAMIC PACKAGES CATALOG ====================
+        const ALL_PACKAGES = [
+            {
+                title: 'Ooty & Nilgiris Hills',
+                duration: '3 Days / 2 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=600&q=80',
+                url: 'package-ooty.html',
+                icon: 'mountain'
+            },
+            {
+                title: 'Paris & London Tour',
+                duration: '8 Days / 7 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80',
+                url: 'package-paris-london.html',
+                icon: 'compass'
+            },
+            {
+                title: 'Vietnam & Cambodia',
+                duration: '7 Days / 6 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600&q=80',
+                url: 'package-vietnam-cambodia.html',
+                icon: 'sun'
+            },
+            {
+                title: 'Rameshwaram & Madurai',
+                duration: '2 Days / 1 Night',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80',
+                url: 'package-rameshwaram.html',
+                icon: 'sparkles'
+            },
+            {
+                title: 'Bali Tropical Escape',
+                duration: '6 Days / 5 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80',
+                url: 'package-bali.html',
+                icon: 'palmtree'
+            },
+            {
+                title: 'Dazzling Dubai & Safari',
+                duration: '5 Days / 4 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80',
+                url: 'package-dubai.html',
+                icon: 'plane'
+            },
+            {
+                title: 'Kodaikanal Mist Retreat',
+                duration: '3 Days / 2 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1609137144822-0a133f95ec84?auto=format&fit=crop&w=600&q=80',
+                url: 'package-kodaikanal.html',
+                icon: 'cloud-fog'
+            },
+            {
+                title: 'Coorg Coffee Haven',
+                duration: '3 Days / 2 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=600&q=80',
+                url: 'package-coorg.html',
+                icon: 'coffee'
+            },
+            {
+                title: 'Trivandrum & Kovalam',
+                duration: '3 Days / 2 Nights',
+                price: 'Enquire for Price',
+                image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80',
+                url: 'package-trivandrum.html',
+                icon: 'anchor'
+            }
+        ];
+
+        let packageDeckIndex = 0;
+        const visibleCount = 4;
+        const angles = [-12, -3, 6, 14];
+
+        function renderPolaroidDeck() {
+            const container = document.getElementById('polaroid-container');
+            if (!container) return;
+
+            let html = '';
+            for (let i = 0; i < visibleCount; i++) {
+                const pkgIndex = (packageDeckIndex + i) % ALL_PACKAGES.length;
+                const pkg = ALL_PACKAGES[pkgIndex];
+                const angle = angles[i];
+                const mrClass = i < visibleCount - 1 ? 'md:-mr-10' : '';
+                const zIndex = (i + 1) * 10;
+
+                html += `
+                    <a href="${pkg.url}" class="polaroid-card bg-white p-3 pb-4 rounded-xl text-neutral-900 w-52 sm:w-56 md:w-60 block cursor-pointer transition-all duration-300 transform md:${angle < 0 ? `-rotate-[${Math.abs(angle)}deg]` : `rotate-[${angle}deg]`} ${mrClass} z-${zIndex} hover:scale-105 shadow-xl"
+                        style="transform: rotate(${angle}deg);">
+                        <div class="relative rounded-lg overflow-hidden aspect-[4/3.5] bg-neutral-100 group">
+                            <img src="${pkg.image}"
+                                alt="${pkg.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                            <div
+                                class="absolute top-2 left-2 w-5 h-5 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center text-neutral-800">
+                                <i data-lucide="${pkg.icon}" class="w-2.5 h-2.5"></i>
+                            </div>
+                        </div>
+                        <div class="pt-3">
+                            <h4 class="font-editorial text-sm font-bold truncate">${pkg.title}</h4>
+                            <div class="flex items-center justify-between text-[11px] text-neutral-500 mt-1">
+                                <span>${pkg.duration}</span>
+                                <span class="font-bold text-amber-700 text-[10px] uppercase tracking-wider">${pkg.price}</span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }
+
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function shufflePolaroids(direction) {
+            packageDeckIndex = (packageDeckIndex + direction + ALL_PACKAGES.length) % ALL_PACKAGES.length;
+            renderPolaroidDeck();
+            const currentPkg = ALL_PACKAGES[packageDeckIndex];
+            showToast(`Browsing: ${currentPkg.title}`);
+        }
+
+        // Initialize Polaroid Deck on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPolaroidDeck();
+        });
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toast-message');
+            msg.textContent = message;
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3500);
+        }
+
+        // Sticky Navbar Dynamic Scroll State
+        const mainNav = document.getElementById('main-navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                mainNav.classList.add('bg-[#0E1721]/90', 'backdrop-blur-xl', 'shadow-2xl', 'py-3.5', 'border-b', 'border-white/10');
+                mainNav.classList.remove('bg-transparent', 'py-5', 'sm:py-6');
+            } else {
+                mainNav.classList.remove('bg-[#0E1721]/90', 'backdrop-blur-xl', 'shadow-2xl', 'py-3.5', 'border-b', 'border-white/10');
+                mainNav.classList.add('bg-transparent', 'py-5', 'sm:py-6');
+            }
+        });
+
+        // Hero Background Video Cycling Controller
+        let currentHeroVid = 0;
+        const totalHeroVids = 4;
+        let heroVidTimer = null;
+
+        function switchHeroVideo(index) {
+            currentHeroVid = index;
+            const videos = document.querySelectorAll('.hero-bg-video');
+            const buttons = document.querySelectorAll('.vid-indicator-btn');
+
+            videos.forEach((vid, i) => {
+                if (i === index) {
+                    vid.classList.remove('opacity-0', 'pointer-events-none');
+                    vid.classList.add('opacity-100');
+                    const playPromise = vid.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {});
+                    }
+                } else {
+                    vid.classList.remove('opacity-100');
+                    vid.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        if (i !== currentHeroVid) {
+                            vid.pause();
+                        }
+                    }, 1000);
+                }
+            });
+
+            startHeroVidTimer();
+        }
+
+        function nextHeroVideo() {
+            switchHeroVideo((currentHeroVid + 1) % totalHeroVids);
+        }
+
+        function startHeroVidTimer() {
+            clearInterval(heroVidTimer);
+            heroVidTimer = setInterval(nextHeroVideo, 8000);
+        }
+
+        // Initialize hero video autoplay loop
+        startHeroVidTimer();
+    </script>
+    <!-- API Client & Form Submissions -->
+    <script src="js/api.js"></script>
+</body>
+
+</html>
