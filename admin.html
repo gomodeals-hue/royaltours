@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal — The Royal Tours and Travels</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',
+                            goldlight: '#F5E6CC',
+                            navy: '#0E1721',
+                            card: '#162332',
+                            sky: '#4C799E'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0A1017;
+            color: #F3F4F6;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0E1721;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2D5575;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed top-6 right-6 z-[100] transform translate-y-[-150%] opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-[#162332] text-white px-5 py-3 rounded-2xl shadow-2xl border border-amber-400/30 text-xs font-semibold">
+        <div id="toast-icon" class="w-5 h-5 flex items-center justify-center rounded-full bg-amber-400/20 text-amber-300">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+        </div>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- ==================== LOGIN SCREEN ==================== -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0A1017] p-4">
+        <div class="w-full max-w-md bg-[#162332] border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-400/10 text-amber-300 border border-amber-400/20 mb-4">
+                    <i data-lucide="shield-check" class="w-7 h-7"></i>
+                </div>
+                <h1 class="font-editorial text-2xl sm:text-3xl font-bold text-white">The Royal Tours</h1>
+                <p class="text-xs text-neutral-400 mt-1">Management Portal &amp; Booking Console</p>
+            </div>
+
+            <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-300 uppercase tracking-wider mb-1.5">Username or Email</label>
+                    <div class="relative">
+                        <i data-lucide="user" class="absolute left-3.5 top-3 w-4 h-4 text-neutral-400"></i>
+                        <input type="text" id="login-username" required value="admin@royaltours.com"
+                            class="w-full pl-10 pr-4 py-2.5 bg-[#0E1721] border border-white/10 rounded-xl text-xs text-white focus:ring-2 focus:ring-amber-400 focus:outline-none" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-300 uppercase tracking-wider mb-1.5">Password</label>
+                    <div class="relative">
+                        <i data-lucide="lock" class="absolute left-3.5 top-3 w-4 h-4 text-neutral-400"></i>
+                        <input type="password" id="login-password" required value="royal2026!"
+                            class="w-full pl-10 pr-4 py-2.5 bg-[#0E1721] border border-white/10 rounded-xl text-xs text-white focus:ring-2 focus:ring-amber-400 focus:outline-none" />
+                    </div>
+                </div>
+
+                <div id="login-error" class="hidden text-rose-400 text-xs bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-xl"></div>
+
+                <button type="submit" id="btn-login"
+                    class="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-neutral-950 font-bold text-xs py-3.5 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 mt-2">
+                    <span>Unlock Dashboard</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 pt-6 border-t border-white/10 text-center">
+                <p class="text-[11px] text-neutral-500">Default: <span class="text-neutral-300 font-mono">admin@royaltours.com</span> / <span class="text-neutral-300 font-mono">royal2026!</span></p>
+                <a href="index.html" class="inline-flex items-center space-x-1 text-xs text-amber-300 hover:underline mt-3">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span>Return to Public Website</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN DASHBOARD LAYOUT ==================== -->
+    <div id="dashboard-app" class="hidden min-h-screen flex flex-col">
+
+        <!-- Top Header Navigation -->
+        <header class="bg-[#162332] border-b border-white/10 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold">
+                        RT
+                    </div>
+                    <div>
+                        <div class="font-editorial text-lg font-bold text-white leading-tight">The Royal Tours</div>
+                        <div class="text-[10px] text-amber-300/80 font-medium">Coimbatore Operations Hub</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="hidden md:flex items-center space-x-1 bg-[#0E1721] p-1 rounded-xl border border-white/10 text-xs">
+                    <button onclick="switchTab('tab-bookings')" id="nav-tab-bookings"
+                        class="tab-btn px-4 py-2 rounded-lg font-semibold transition bg-amber-400 text-neutral-950 shadow">
+                        Bookings &amp; Quotes
+                    </button>
+                    <button onclick="switchTab('tab-contacts')" id="nav-tab-contacts"
+                        class="tab-btn px-4 py-2 rounded-lg font-semibold transition text-neutral-400 hover:text-white">
+                        Enquiries Inbox
+                    </button>
+                    <button onclick="switchTab('tab-packages')" id="nav-tab-packages"
+                        class="tab-btn px-4 py-2 rounded-lg font-semibold transition text-neutral-400 hover:text-white">
+                        Tour Packages
+                    </button>
+                    <button onclick="switchTab('tab-reviews')" id="nav-tab-reviews"
+                        class="tab-btn px-4 py-2 rounded-lg font-semibold transition text-neutral-400 hover:text-white">
+                        Reviews
+                    </button>
+                    <button onclick="switchTab('tab-newsletter')" id="nav-tab-newsletter"
+                        class="tab-btn px-4 py-2 rounded-lg font-semibold transition text-neutral-400 hover:text-white">
+                        Newsletter
+                    </button>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" target="_blank"
+                        class="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs text-neutral-300 border border-white/10 transition">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        <span>Live Site</span>
+                    </a>
+                    <button onclick="logoutAdmin()"
+                        class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-xs font-semibold transition">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Subnav Bar -->
+            <div class="md:hidden flex overflow-x-auto px-4 py-2 space-x-2 border-t border-white/5 bg-[#0E1721] text-xs">
+                <button onclick="switchTab('tab-bookings')" class="whitespace-nowrap px-3 py-1.5 rounded-lg bg-amber-400 text-neutral-950 font-bold">Bookings</button>
+                <button onclick="switchTab('tab-contacts')" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-neutral-300">Enquiries</button>
+                <button onclick="switchTab('tab-packages')" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-neutral-300">Packages</button>
+                <button onclick="switchTab('tab-reviews')" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-neutral-300">Reviews</button>
+                <button onclick="switchTab('tab-newsletter')" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-neutral-300">Newsletter</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace Container -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+            <!-- KPI Metric Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Total Bookings -->
+                <div class="bg-[#162332] border border-white/10 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-semibold mb-2">
+                        <span>Total Bookings</span>
+                        <div class="w-8 h-8 rounded-xl bg-amber-400/10 text-amber-300 flex items-center justify-center">
+                            <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div id="kpi-total-bookings" class="text-2xl sm:text-3xl font-bold text-white font-editorial">--</div>
+                    <div class="text-[11px] text-amber-300/80 mt-1 flex items-center space-x-1">
+                        <span id="kpi-pending-bookings">--</span> pending action
+                    </div>
+                </div>
+
+                <!-- Total Enquiries -->
+                <div class="bg-[#162332] border border-white/10 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-semibold mb-2">
+                        <span>Customer Leads</span>
+                        <div class="w-8 h-8 rounded-xl bg-sky-400/10 text-sky-300 flex items-center justify-center">
+                            <i data-lucide="message-square" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div id="kpi-total-contacts" class="text-2xl sm:text-3xl font-bold text-white font-editorial">--</div>
+                    <div class="text-[11px] text-sky-300/80 mt-1 flex items-center space-x-1">
+                        <span id="kpi-new-contacts">--</span> new leads
+                    </div>
+                </div>
+
+                <!-- Active Packages -->
+                <div class="bg-[#162332] border border-white/10 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-semibold mb-2">
+                        <span>Active Tours</span>
+                        <div class="w-8 h-8 rounded-xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center">
+                            <i data-lucide="map" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div id="kpi-total-packages" class="text-2xl sm:text-3xl font-bold text-white font-editorial">9</div>
+                    <div class="text-[11px] text-emerald-300/80 mt-1">Multi-image galleries active</div>
+                </div>
+
+                <!-- Subscribers -->
+                <div class="bg-[#162332] border border-white/10 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-semibold mb-2">
+                        <span>Subscribers</span>
+                        <div class="w-8 h-8 rounded-xl bg-purple-400/10 text-purple-300 flex items-center justify-center">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div id="kpi-total-subscribers" class="text-2xl sm:text-3xl font-bold text-white font-editorial">--</div>
+                    <div class="text-[11px] text-purple-300/80 mt-1">Expedition Club Members</div>
+                </div>
+            </div>
+
+            <!-- ==================== TAB 1: BOOKINGS ==================== -->
+            <section id="tab-bookings" class="tab-content space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="font-editorial text-2xl font-bold text-white">Tour Bookings &amp; Quotations</h2>
+                        <p class="text-xs text-neutral-400">Manage incoming vacation requests and client confirmations.</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <input type="text" id="search-bookings" placeholder="Search customer, phone, package..."
+                            oninput="loadBookings()"
+                            class="px-3.5 py-2 bg-[#162332] border border-white/10 rounded-xl text-xs text-white focus:ring-2 focus:ring-amber-400 focus:outline-none w-56" />
+
+                        <select id="filter-booking-status" onchange="loadBookings()"
+                            class="px-3.5 py-2 bg-[#162332] border border-white/10 rounded-xl text-xs text-white focus:ring-2 focus:ring-amber-400 focus:outline-none">
+                            <option value="all">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Contacted">Contacted</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+
+                        <button onclick="exportCSV('bookings')"
+                            class="px-3.5 py-2 rounded-xl bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold flex items-center space-x-1.5 transition">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="bg-[#162332] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-neutral-300">
+                            <thead class="bg-[#0E1721] text-neutral-400 uppercase text-[10px] tracking-wider border-b border-white/10 font-bold">
+                                <tr>
+                                    <th class="px-5 py-4">Ref #</th>
+                                    <th class="px-5 py-4">Customer</th>
+                                    <th class="px-5 py-4">Package</th>
+                                    <th class="px-5 py-4">Travel Date</th>
+                                    <th class="px-5 py-4">Travelers</th>
+                                    <th class="px-5 py-4">Status</th>
+                                    <th class="px-5 py-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookings-table-body" class="divide-y divide-white/5">
+                                <tr>
+                                    <td colspan="7" class="text-center py-10 text-neutral-500">Loading bookings...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== TAB 2: CONTACTS & ENQUIRIES ==================== -->
+            <section id="tab-contacts" class="tab-content hidden space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="font-editorial text-2xl font-bold text-white">General &amp; Service Enquiries</h2>
+                        <p class="text-xs text-neutral-400">Leads from contact form, flight/visa requests, and instant modals.</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <input type="text" id="search-contacts" placeholder="Search name, phone, service..."
+                            oninput="loadContacts()"
+                            class="px-3.5 py-2 bg-[#162332] border border-white/10 rounded-xl text-xs text-white focus:ring-2 focus:ring-amber-400 focus:outline-none w-56" />
+
+                        <button onclick="exportCSV('contacts')"
+                            class="px-3.5 py-2 rounded-xl bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold flex items-center space-x-1.5 transition">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-[#162332] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-neutral-300">
+                            <thead class="bg-[#0E1721] text-neutral-400 uppercase text-[10px] tracking-wider border-b border-white/10 font-bold">
+                                <tr>
+                                    <th class="px-5 py-4">Date</th>
+                                    <th class="px-5 py-4">Name &amp; Phone</th>
+                                    <th class="px-5 py-4">Service Requested</th>
+                                    <th class="px-5 py-4">Destination / Requirement</th>
+                                    <th class="px-5 py-4">Status</th>
+                                    <th class="px-5 py-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contacts-table-body" class="divide-y divide-white/5">
+                                <tr>
+                                    <td colspan="6" class="text-center py-10 text-neutral-500">Loading enquiries...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== TAB 3: TOUR PACKAGES & GALLERIES ==================== -->
+            <section id="tab-packages" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="font-editorial text-2xl font-bold text-white">Tour Packages &amp; Multi-Image Galleries</h2>
+                        <p class="text-xs text-neutral-400">View active packages, multi-photo sets, pricing, and highlights.</p>
+                    </div>
+                </div>
+
+                <div id="packages-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- ==================== TAB 4: REVIEWS ==================== -->
+            <section id="tab-reviews" class="tab-content hidden space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="font-editorial text-2xl font-bold text-white">Customer Reviews &amp; Testimonials</h2>
+                        <p class="text-xs text-neutral-400">Published reviews appearing across the website.</p>
+                    </div>
+                </div>
+
+                <div id="reviews-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- ==================== TAB 5: NEWSLETTER ==================== -->
+            <section id="tab-newsletter" class="tab-content hidden space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="font-editorial text-2xl font-bold text-white">Expedition Club Subscribers</h2>
+                        <p class="text-xs text-neutral-400">Emails subscribed to exclusive travel updates and discount offers.</p>
+                    </div>
+
+                    <button onclick="exportCSV('newsletter')"
+                        class="px-3.5 py-2 rounded-xl bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold flex items-center space-x-1.5 transition">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span>Export Subscribers</span>
+                    </button>
+                </div>
+
+                <div class="bg-[#162332] border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-6">
+                    <div id="newsletter-list-body" class="space-y-2">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ==================== MODAL: VIEW BOOKING DETAILS ==================== -->
+    <div id="modal-booking-view" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="bg-[#162332] border border-white/15 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-white space-y-5">
+            <button onclick="closeModal('modal-booking-view')"
+                class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center">
+                    <i data-lucide="receipt" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span id="detail-ref-id" class="text-xs font-mono font-bold text-amber-300 uppercase">RT-2026-0000</span>
+                    <h3 id="detail-customer-name" class="font-editorial text-xl font-bold">Customer Name</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs bg-[#0E1721] p-4 rounded-2xl border border-white/5">
+                <div>
+                    <span class="text-neutral-400 block text-[10px] uppercase font-bold">Phone / WhatsApp</span>
+                    <span id="detail-phone" class="font-semibold text-white">--</span>
+                </div>
+                <div>
+                    <span class="text-neutral-400 block text-[10px] uppercase font-bold">Email</span>
+                    <span id="detail-email" class="font-semibold text-white">--</span>
+                </div>
+                <div>
+                    <span class="text-neutral-400 block text-[10px] uppercase font-bold">Selected Package</span>
+                    <span id="detail-package" class="font-semibold text-amber-300">--</span>
+                </div>
+                <div>
+                    <span class="text-neutral-400 block text-[10px] uppercase font-bold">Travel Date</span>
+                    <span id="detail-date" class="font-semibold text-white">--</span>
+                </div>
+                <div>
+                    <span class="text-neutral-400 block text-[10px] uppercase font-bold">Travelers</span>
+                    <span id="detail-travelers" class="font-semibold text-white">--</span>
+                </div>
+                <div>
+                    <span class="text-neutral-400 block text-[10px] uppercase font-bold">Booking Status</span>
+                    <span id="detail-status" class="font-bold text-emerald-400">--</span>
+                </div>
+            </div>
+
+            <div id="detail-notes-container">
+                <span class="text-neutral-400 block text-[10px] uppercase font-bold mb-1">Customer Notes</span>
+                <p id="detail-notes" class="text-xs text-neutral-300 bg-[#0E1721] p-3 rounded-xl border border-white/5 italic">--</p>
+            </div>
+
+            <div class="flex items-center space-x-3 pt-2">
+                <a id="detail-whatsapp-btn" href="#" target="_blank"
+                    class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl text-center flex items-center justify-center space-x-2 transition shadow">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Chat on WhatsApp</span>
+                </a>
+                <a id="detail-call-btn" href="#"
+                    class="flex-1 bg-white/10 hover:bg-white/20 text-white font-bold text-xs py-3 rounded-xl text-center flex items-center justify-center space-x-2 transition border border-white/10">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                    <span>Call Customer</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL: GALLERY INSPECTOR ==================== -->
+    <div id="modal-gallery" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="bg-[#162332] border border-white/15 rounded-3xl max-w-3xl w-full p-6 shadow-2xl relative text-white space-y-4">
+            <button onclick="closeModal('modal-gallery')"
+                class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="flex items-center space-x-2">
+                <i data-lucide="image" class="w-5 h-5 text-amber-300"></i>
+                <h3 id="gallery-modal-title" class="font-editorial text-xl font-bold">Package Gallery</h3>
+            </div>
+
+            <div id="gallery-modal-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[70vh] overflow-y-auto pr-1">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        let authToken = localStorage.getItem('royal_admin_token') || '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            if (authToken) {
+                verifyAuthSession();
+            } else {
+                showLogin();
+            }
+        });
+
+        function showToast(msg, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            const icon = document.getElementById('toast-icon');
+
+            msgEl.textContent = msg;
+            if (isSuccess) {
+                icon.className = 'w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400';
+            } else {
+                icon.className = 'w-5 h-5 flex items-center justify-center rounded-full bg-rose-500/20 text-rose-400';
+            }
+
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3500);
+        }
+
+        function showLogin() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('dashboard-app').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard-app').classList.remove('hidden');
+            lucide.createIcons();
+            loadDashboardStats();
+            loadBookings();
+            loadContacts();
+            loadPackages();
+            loadReviews();
+            loadNewsletter();
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const errEl = document.getElementById('login-error');
+            const btn = document.getElementById('btn-login');
+
+            errEl.classList.add('hidden');
+            btn.innerHTML = '<span class="animate-pulse">Authenticating...</span>';
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+
+                if (data.success && data.token) {
+                    authToken = data.token;
+                    localStorage.setItem('royal_admin_token', authToken);
+                    showToast('👋 Welcome back, Admin!');
+                    showDashboard();
+                } else {
+                    errEl.textContent = data.message || 'Invalid credentials';
+                    errEl.classList.remove('hidden');
+                }
+            } catch (err) {
+                errEl.textContent = 'Server connection error. Please make sure backend is running.';
+                errEl.classList.remove('hidden');
+            } finally {
+                btn.innerHTML = '<span>Unlock Dashboard</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                lucide.createIcons();
+            }
+        }
+
+        async function verifyAuthSession() {
+            try {
+                const res = await fetch('/api/admin/me', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showDashboard();
+                } else {
+                    logoutAdmin();
+                }
+            } catch (e) {
+                showDashboard(); // fallback if offline
+            }
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('royal_admin_token');
+            authToken = '';
+            showToast('Logged out successfully');
+            showLogin();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn px-4 py-2 rounded-lg font-semibold transition text-neutral-400 hover:text-white';
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = 'tab-btn px-4 py-2 rounded-lg font-semibold transition bg-amber-400 text-neutral-950 shadow';
+            }
+            lucide.createIcons();
+        }
+
+        // ==================== DASHBOARD STATS ====================
+        async function loadDashboardStats() {
+            try {
+                const res = await fetch('/api/admin/stats');
+                const json = await res.json();
+                if (json.success && json.stats) {
+                    document.getElementById('kpi-total-bookings').textContent = json.stats.totalBookings || 0;
+                    document.getElementById('kpi-pending-bookings').textContent = json.stats.pendingBookings || 0;
+                    document.getElementById('kpi-total-contacts').textContent = json.stats.totalContacts || 0;
+                    document.getElementById('kpi-new-contacts').textContent = json.stats.newContacts || 0;
+                    document.getElementById('kpi-total-packages').textContent = json.stats.totalPackages || 9;
+                    document.getElementById('kpi-total-subscribers').textContent = json.stats.totalSubscribers || 0;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // ==================== BOOKINGS MANAGEMENT ====================
+        let currentBookings = [];
+        async function loadBookings() {
+            const search = document.getElementById('search-bookings').value;
+            const status = document.getElementById('filter-booking-status').value;
+            const tbody = document.getElementById('bookings-table-body');
+
+            try {
+                const query = new URLSearchParams({ search, status });
+                const res = await fetch(`/api/bookings?${query}`);
+                const json = await res.json();
+
+                if (!json.success || !json.data || json.data.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center py-12 text-neutral-500">
+                                <i data-lucide="calendar" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+                                <span>No bookings found.</span>
+                            </td>
+                        </tr>
+                    `;
+                    lucide.createIcons();
+                    return;
+                }
+
+                currentBookings = json.data;
+                tbody.innerHTML = json.data.map(b => {
+                    const statusColors = {
+                        'Pending': 'bg-amber-400/10 text-amber-300 border-amber-400/30',
+                        'Contacted': 'bg-sky-400/10 text-sky-300 border-sky-400/30',
+                        'Confirmed': 'bg-emerald-400/10 text-emerald-300 border-emerald-400/30',
+                        'Completed': 'bg-purple-400/10 text-purple-300 border-purple-400/30',
+                        'Cancelled': 'bg-rose-400/10 text-rose-300 border-rose-400/30'
+                    };
+                    const statusBadge = statusColors[b.status] || 'bg-white/10 text-neutral-300';
+                    const cleanPhone = b.phone.replace(/[^0-9]/g, '');
+
+                    return `
+                        <tr class="hover:bg-white/[0.02] transition">
+                            <td class="px-5 py-4 font-mono font-bold text-amber-300 text-[11px]">${b.ref_id}</td>
+                            <td class="px-5 py-4">
+                                <div class="font-bold text-white">${escapeHtml(b.customer_name)}</div>
+                                <div class="text-[11px] text-neutral-400 font-mono">${escapeHtml(b.phone)}</div>
+                            </td>
+                            <td class="px-5 py-4 font-medium text-neutral-200">${escapeHtml(b.package_name)}</td>
+                            <td class="px-5 py-4 text-neutral-300">${escapeHtml(b.travel_date || 'Flexible')}</td>
+                            <td class="px-5 py-4 text-neutral-400">${escapeHtml(b.travelers || '2 Adults')}</td>
+                            <td class="px-5 py-4">
+                                <select onchange="updateBookingStatus(${b.id}, this.value)"
+                                    class="text-[11px] font-bold px-2.5 py-1 rounded-full border bg-[#0E1721] focus:outline-none ${statusBadge}">
+                                    <option value="Pending" ${b.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="Contacted" ${b.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                                    <option value="Confirmed" ${b.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                                    <option value="Completed" ${b.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                    <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                                </select>
+                            </td>
+                            <td class="px-5 py-4 text-right space-x-2">
+                                <a href="https://wa.me/${cleanPhone}?text=Hello%20${encodeURIComponent(b.customer_name)}%2C%20regarding%20your%20The%20Royal%20Tours%20booking%20enquiry%20(${b.ref_id})%20for%20${encodeURIComponent(b.package_name)}..." target="_blank"
+                                    title="WhatsApp Customer"
+                                    class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition">
+                                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                </a>
+                                <button onclick="viewBookingDetail(${b.id})" title="View Details"
+                                    class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-amber-400/10 text-amber-300 hover:bg-amber-400/20 transition">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button onclick="deleteBooking(${b.id})" title="Delete"
+                                    class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+                lucide.createIcons();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function updateBookingStatus(id, newStatus) {
+            try {
+                const res = await fetch(`/api/bookings/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast(data.message);
+                    loadDashboardStats();
+                    loadBookings();
+                }
+            } catch (e) {
+                showToast('Failed to update status', false);
+            }
+        }
+
+        async function deleteBooking(id) {
+            if (!confirm('Are you sure you want to delete this booking record?')) return;
+            try {
+                const res = await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Booking deleted');
+                    loadDashboardStats();
+                    loadBookings();
+                }
+            } catch (e) {
+                showToast('Delete failed', false);
+            }
+        }
+
+        function viewBookingDetail(id) {
+            const b = currentBookings.find(item => item.id === id);
+            if (!b) return;
+
+            document.getElementById('detail-ref-id').textContent = b.ref_id;
+            document.getElementById('detail-customer-name').textContent = b.customer_name;
+            document.getElementById('detail-phone').textContent = b.phone;
+            document.getElementById('detail-email').textContent = b.email || 'None provided';
+            document.getElementById('detail-package').textContent = b.package_name;
+            document.getElementById('detail-date').textContent = b.travel_date || 'Flexible';
+            document.getElementById('detail-travelers').textContent = b.travelers || '2 Adults';
+            document.getElementById('detail-status').textContent = b.status;
+            document.getElementById('detail-notes').textContent = b.notes || 'No extra notes provided by customer.';
+
+            const cleanPhone = b.phone.replace(/[^0-9]/g, '');
+            document.getElementById('detail-whatsapp-btn').href = `https://wa.me/${cleanPhone}?text=Hello%20${encodeURIComponent(b.customer_name)}%2C%20regarding%20your%20The%20Royal%20Tours%20booking%20enquiry%20(${b.ref_id})...`;
+            document.getElementById('detail-call-btn').href = `tel:${cleanPhone}`;
+
+            openModal('modal-booking-view');
+        }
+
+        // ==================== CONTACTS & ENQUIRIES ====================
+        async function loadContacts() {
+            const search = document.getElementById('search-contacts').value;
+            const tbody = document.getElementById('contacts-table-body');
+
+            try {
+                const res = await fetch(`/api/contacts?search=${encodeURIComponent(search)}`);
+                const json = await res.json();
+
+                if (!json.success || !json.data || json.data.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center py-12 text-neutral-500">No customer enquiries found.</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = json.data.map(c => {
+                    const cleanPhone = c.phone.replace(/[^0-9]/g, '');
+                    return `
+                        <tr class="hover:bg-white/[0.02] transition">
+                            <td class="px-5 py-4 text-neutral-400 font-mono text-[11px]">${new Date(c.created_at).toLocaleDateString()}</td>
+                            <td class="px-5 py-4">
+                                <div class="font-bold text-white">${escapeHtml(c.name)}</div>
+                                <div class="text-[11px] text-amber-300/90 font-mono">${escapeHtml(c.phone)}</div>
+                                ${c.email ? `<div class="text-[10px] text-neutral-400">${escapeHtml(c.email)}</div>` : ''}
+                            </td>
+                            <td class="px-5 py-4">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-sky-400/10 text-sky-300 border border-sky-400/20">
+                                    ${escapeHtml(c.service_type || 'General')}
+                                </span>
+                            </td>
+                            <td class="px-5 py-4">
+                                <div class="font-medium text-neutral-200">${escapeHtml(c.destination || 'Not specified')}</div>
+                                ${c.message ? `<div class="text-[11px] text-neutral-400 line-clamp-1 italic">"${escapeHtml(c.message)}"</div>` : ''}
+                            </td>
+                            <td class="px-5 py-4">
+                                <select onchange="updateContactStatus(${c.id}, this.value)"
+                                    class="text-[11px] font-bold px-2 py-1 rounded-full border bg-[#0E1721] focus:outline-none ${c.status === 'New' ? 'text-amber-300 border-amber-400/30' : 'text-emerald-300 border-emerald-400/30'}">
+                                    <option value="New" ${c.status === 'New' ? 'selected' : ''}>New Lead</option>
+                                    <option value="Contacted" ${c.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                                    <option value="Closed" ${c.status === 'Closed' ? 'selected' : ''}>Closed</option>
+                                </select>
+                            </td>
+                            <td class="px-5 py-4 text-right space-x-2">
+                                <a href="https://wa.me/${cleanPhone}?text=Hello%20${encodeURIComponent(c.name)}%2C%20thank%20you%20for%20contacting%20The%20Royal%20Tours%20regarding%20${encodeURIComponent(c.service_type || 'Travel')}..." target="_blank"
+                                    title="Reply via WhatsApp"
+                                    class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition">
+                                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                </a>
+                                <button onclick="deleteContact(${c.id})" title="Delete"
+                                    class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+                lucide.createIcons();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function updateContactStatus(id, status) {
+            try {
+                const res = await fetch(`/api/contacts/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Enquiry updated');
+                    loadDashboardStats();
+                }
+            } catch (e) {
+                showToast('Update failed', false);
+            }
+        }
+
+        async function deleteContact(id) {
+            if (!confirm('Delete this contact inquiry?')) return;
+            try {
+                await fetch(`/api/contacts/${id}`, { method: 'DELETE' });
+                showToast('Enquiry deleted');
+                loadDashboardStats();
+                loadContacts();
+            } catch (e) {
+                showToast('Delete failed', false);
+            }
+        }
+
+        // ==================== PACKAGES WITH MULTI-IMAGE GALLERIES ====================
+        let currentPackages = [];
+        async function loadPackages() {
+            const container = document.getElementById('packages-cards-grid');
+            try {
+                const res = await fetch('/api/packages');
+                const json = await res.json();
+                if (!json.success || !json.data) return;
+
+                currentPackages = json.data;
+                container.innerHTML = json.data.map(p => {
+                    const gallery = p.gallery_images || [];
+                    return `
+                        <div class="bg-[#162332] border border-white/10 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                            <div class="relative h-44 overflow-hidden group">
+                                <img src="${p.image_url}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#162332] via-transparent to-transparent"></div>
+                                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0E1721]/80 backdrop-blur-md text-amber-300 border border-white/10">
+                                    ${p.category}
+                                </span>
+                                <button onclick="openPackageGalleryModal('${p.slug}')"
+                                    class="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-black/70 hover:bg-black/90 text-white text-[11px] font-semibold flex items-center space-x-1.5 backdrop-blur-md transition">
+                                    <i data-lucide="images" class="w-3.5 h-3.5 text-amber-300"></i>
+                                    <span>${gallery.length} Photos</span>
+                                </button>
+                            </div>
+
+                            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                                <div>
+                                    <h4 class="font-editorial text-lg font-bold text-white line-clamp-1">${escapeHtml(p.title)}</h4>
+                                    <div class="text-xs text-neutral-400 mt-0.5 flex items-center space-x-1">
+                                        <i data-lucide="map-pin" class="w-3 h-3 text-amber-400"></i>
+                                        <span>${escapeHtml(p.destination)}</span>
+                                    </div>
+                                    <p class="text-xs text-neutral-300 mt-2.5 line-clamp-2">${escapeHtml(p.description)}</p>
+                                </div>
+
+                                <div class="pt-3 border-t border-white/10 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-[10px] text-neutral-400 block uppercase font-bold">Package Price</span>
+                                        <span class="text-base font-bold text-amber-300">${p.price}</span>
+                                    </div>
+                                    <a href="${p.page_url}" target="_blank"
+                                        class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold text-white transition flex items-center space-x-1">
+                                        <span>View Page</span>
+                                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                lucide.createIcons();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function openPackageGalleryModal(slug) {
+            const pkg = currentPackages.find(p => p.slug === slug);
+            if (!pkg) return;
+
+            document.getElementById('gallery-modal-title').textContent = `${pkg.title} (${(pkg.gallery_images || []).length} Curated Images)`;
+            const grid = document.getElementById('gallery-modal-grid');
+
+            grid.innerHTML = (pkg.gallery_images || []).map(img => `
+                <div class="rounded-xl overflow-hidden bg-[#0E1721] border border-white/10 group">
+                    <img src="${img.url}" alt="${img.caption || 'Tour image'}" class="w-full h-36 object-cover group-hover:scale-105 transition duration-300" />
+                    <div class="p-2 text-[11px] font-medium text-neutral-300 line-clamp-1 bg-[#0E1721]">${escapeHtml(img.caption || 'Tour Sight')}</div>
+                </div>
+            `).join('');
+
+            openModal('modal-gallery');
+            lucide.createIcons();
+        }
+
+        // ==================== REVIEWS ====================
+        async function loadReviews() {
+            const container = document.getElementById('reviews-list-container');
+            try {
+                const res = await fetch('/api/reviews?all=true');
+                const json = await res.json();
+                if (!json.success || !json.data) return;
+
+                container.innerHTML = json.data.map(r => `
+                    <div class="bg-[#162332] border border-white/10 rounded-2xl p-5 shadow-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-bold text-white text-sm">${escapeHtml(r.customer_name)}</h4>
+                                <span class="text-[11px] text-amber-300">${escapeHtml(r.location || 'Verified Traveler')}</span>
+                            </div>
+                            <div class="flex text-amber-400">
+                                ${Array(r.rating || 5).fill('<i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>').join('')}
+                            </div>
+                        </div>
+                        <p class="text-xs text-neutral-300 leading-relaxed italic">"${escapeHtml(r.review_text)}"</p>
+                        <div class="pt-2 border-t border-white/5 flex items-center justify-between text-[11px]">
+                            <span class="text-neutral-400">${escapeHtml(r.package_name || 'Tour Package')}</span>
+                            <button onclick="deleteReview(${r.id})" class="text-rose-400 hover:text-rose-300">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+                lucide.createIcons();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function deleteReview(id) {
+            if (!confirm('Delete this review?')) return;
+            try {
+                await fetch(`/api/reviews/${id}`, { method: 'DELETE' });
+                showToast('Review removed');
+                loadReviews();
+            } catch (e) {
+                showToast('Delete failed', false);
+            }
+        }
+
+        // ==================== NEWSLETTER ====================
+        async function loadNewsletter() {
+            const body = document.getElementById('newsletter-list-body');
+            try {
+                const res = await fetch('/api/newsletter');
+                const json = await res.json();
+                if (!json.success || !json.data || json.data.length === 0) {
+                    body.innerHTML = '<p class="text-neutral-500 text-xs text-center py-6">No subscribers yet.</p>';
+                    return;
+                }
+
+                body.innerHTML = json.data.map(sub => `
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#0E1721] border border-white/5 text-xs">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="mail" class="w-4 h-4 text-amber-400"></i>
+                            <span class="font-mono text-neutral-200">${escapeHtml(sub.email)}</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-neutral-500 text-[11px]">
+                            <span>${new Date(sub.created_at).toLocaleDateString()}</span>
+                            <button onclick="deleteNewsletter(${sub.id})" class="text-rose-400 hover:text-rose-300">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                lucide.createIcons();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function deleteNewsletter(id) {
+            try {
+                await fetch(`/api/newsletter/${id}`, { method: 'DELETE' });
+                showToast('Subscriber removed');
+                loadNewsletter();
+                loadDashboardStats();
+            } catch (e) {
+                showToast('Delete failed', false);
+            }
+        }
+
+        // ==================== CSV EXPORT ====================
+        function exportCSV(type) {
+            window.open(`/api/admin/export/${type}`, '_blank');
+        }
+
+        // ==================== MODAL UTILS ====================
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+            lucide.createIcons();
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!-- 
+    COMPLETE UPDATED PACKAGE BOOKING FORM TEMPLATE
+    Use this exact HTML for all 9 package files
+    Location: Replace the <form> section in each package HTML file
+-->
+
+<form onsubmit="handlePackageBooking(event)" class="space-y-4 pt-4 border-t border-neutral-100">
+    <!-- NAME FIELD -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Your Full Name</label>
+        <input type="text" name="name" required placeholder="e.g. Anand Kumar"
+            class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+    </div>
+
+    <!-- EMAIL FIELD - NEW -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Email ID</label>
+        <input type="email" name="email" required placeholder="your@email.com"
+            class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+    </div>
+
+    <!-- PHONE FIELD -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Phone / WhatsApp</label>
+        <input type="tel" name="phone" required placeholder="+91 98765 43210"
+            class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+    </div>
+
+    <!-- TRAVEL DATE FIELD -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Expected Travel Date</label>
+        <input type="date" name="travel_date" required
+            class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+    </div>
+
+    <!-- OCCASION FIELD - NEW -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Occasion</label>
+        <select name="occasion" class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+            <option value="">-- Select Occasion --</option>
+            <option>Honeymoon</option>
+            <option>Family Vacation</option>
+            <option>Corporate Team Outing</option>
+            <option>College Trip</option>
+            <option>Adventure Getaway</option>
+        </select>
+    </div>
+
+    <!-- SENIORS & ADULTS (2-COLUMN GRID) - NEW -->
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Seniors</label>
+            <input type="number" name="seniors" min="0" value="0" placeholder="0"
+                class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+        </div>
+        <div>
+            <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Adults</label>
+            <input type="number" name="adults" min="0" value="0" placeholder="0"
+                class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+        </div>
+    </div>
+
+    <!-- CHILDREN & SPECIAL PASSENGERS (2-COLUMN GRID) - NEW -->
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Children</label>
+            <input type="number" name="children" min="0" value="0" placeholder="0"
+                class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+        </div>
+        <div>
+            <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Special Passengers</label>
+            <input type="text" name="special_passengers" placeholder="e.g. Pregnant, Disabled"
+                class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+        </div>
+    </div>
+
+    <!-- TRAVEL MODE FIELD - NEW -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Travel Mode</label>
+        <select name="travel_mode" class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+            <option value="">-- Select Mode --</option>
+            <option>Flight</option>
+            <option>Train</option>
+            <option>Bus</option>
+            <option>Cab</option>
+        </select>
+    </div>
+
+    <!-- HOTEL PREFERENCE FIELD - NEW -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Hotel Preference</label>
+        <select name="hotel_type" class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+            <option value="">-- Select Star Rating --</option>
+            <option>5 Star</option>
+            <option>4 Star</option>
+            <option>3 Star</option>
+            <option>2 Star</option>
+            <option>1 Star</option>
+        </select>
+    </div>
+
+    <!-- MESSAGE / SPECIAL REQUESTS FIELD - NEW -->
+    <div>
+        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Message / Special Requests</label>
+        <textarea name="message" placeholder="Any special requests or notes..."
+            class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none resize-none" rows="3"></textarea>
+    </div>
+
+    <!-- SUBMIT BUTTON -->
+    <button type="submit"
+        class="w-full bg-[#121B24] hover:bg-neutral-800 text-white font-bold text-xs py-3.5 rounded-full transition shadow-md hover:scale-[1.01] flex items-center justify-center space-x-2">
+        <span>Enquire Now</span>
+        <i data-lucide="send" class="w-4 h-4 text-amber-300"></i>
+    </button>
+</form>
+
+
+<!-- 
+    FIELD MAPPING SUMMARY
+    
+    name="name"                    → Customer name
+    name="email"                   → Customer email (NEW)
+    name="phone"                   → Customer phone
+    name="travel_date"             → Expected travel date
+    name="occasion"                → Trip occasion (NEW)
+    name="seniors"                 → Number of seniors (NEW)
+    name="adults"                  → Number of adults (NEW)
+    name="children"                → Number of children (NEW)
+    name="special_passengers"      → Special needs/passengers (NEW)
+    name="travel_mode"             → Preferred travel mode (NEW)
+    name="hotel_type"              → Hotel star preference (NEW)
+    name="message"                 → Special requests/message (NEW)
+-->

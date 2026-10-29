@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tour Packages — The Royal Tours and Travels | Coimbatore</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Playfair Display (Editorial Serif) & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        sky: {
+                            brand: '#6896BC',
+                            dark: '#4C799E',
+                            deep: '#2D5575',
+                            soft: '#EAF2F8'
+                        },
+                        sand: {
+                            wheat: '#E6BC86',
+                            light: '#F5E6CC'
+                        },
+                        darknavy: '#0E1721'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFFFF;
+            color: #1a1a1a;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .package-card {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F1F4F8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #A0B9CF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-amber-200 selection:text-neutral-900 bg-white">
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast"
+        class="fixed top-6 right-6 z-[60] transform translate-y-[-150%] opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-neutral-900 text-white px-5 py-3 rounded-full shadow-2xl border border-white/10 text-xs font-semibold">
+        <div class="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+        </div>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- ==================== STICKY NAVIGATION BAR ==================== -->
+    <nav id="main-navbar" class="fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 py-3.5 bg-[#0E1721]/95 backdrop-blur-xl shadow-2xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div class="flex items-center justify-between">
+
+                <!-- Logo -->
+                <a href="index.html"
+                    class="font-editorial text-xl sm:text-2xl md:text-3xl text-white font-bold tracking-tight hover:opacity-90 transition">
+                    The Royal Tours <span class="font-light italic text-amber-200">&amp; Travels</span>
+                </a>
+
+                <!-- Center Nav Pill (Frosted Glass) -->
+                <div
+                    class="hidden md:flex items-center space-x-7 bg-white/15 backdrop-blur-md px-7 py-2.5 rounded-full border border-white/25 text-white text-xs font-medium shadow-sm">
+                    <a href="index.html" class="hover:text-amber-200 transition">Home</a>
+                    <a href="about.html" class="hover:text-amber-200 transition">About Us</a>
+                    <a href="packages.html" class="text-amber-200 font-bold hover:text-amber-300 transition">Packages</a>
+                    <a href="services.html" class="hover:text-amber-200 transition">Services</a>
+                    <a href="contact.html" class="hover:text-amber-200 transition">Contact</a>
+                </div>
+
+                <!-- Right CTA: Sign In Pill with Arrow -->
+                <div class="flex items-center space-x-3">
+                    <a href="packages.html"
+                        class="group flex items-center space-x-2.5 bg-white hover:bg-neutral-100 text-neutral-900 text-xs font-semibold pl-5 pr-2 py-1.5 rounded-full transition-all duration-200 shadow-md">
+                        <span>Book Tour</span>
+                        <div
+                            class="w-6 h-6 rounded-full bg-neutral-900 text-white flex items-center justify-center transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </div>
+                    </a>
+
+                    <!-- Mobile Nav Hamburger -->
+                    <button onclick="toggleMobileMenu()"
+                        class="md:hidden text-white p-2 rounded-full bg-white/20 backdrop-blur-md">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown -->
+            <div id="mobile-menu"
+                class="hidden md:hidden mt-3 p-4 bg-[#121B24]/95 backdrop-blur-xl rounded-2xl text-white text-sm flex-col space-y-3 border border-white/10 shadow-xl">
+                <a href="index.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Home</a>
+                <a href="about.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">About Us</a>
+                <a href="packages.html" onclick="toggleMobileMenu()" class="py-1 text-amber-200 font-bold">Packages</a>
+                <a href="services.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Services</a>
+                <a href="contact.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== PACKAGES HERO HEADER ==================== -->
+    <header class="relative w-full bg-[#121B24] text-white pt-36 pb-20 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-25">
+            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1800&q=80"
+                alt="Travel scenic background" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121B24] via-[#121B24]/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 text-center">
+            <h1 class="font-editorial text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-tight">
+                Explore Our Handcrafted<br />
+                <span class="italic font-light text-amber-200">Holiday Itineraries</span>
+            </h1>
+
+            <p class="text-white/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto mt-4 leading-relaxed">
+                Discover unforgettable domestic hill stations, South India heritage circuits, and world-class international getaways crafted by The Royal Tours &amp; Travels in Coimbatore.
+            </p>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-8">
+                <button onclick="filterPackages('all')" id="tab-all"
+                    class="filter-btn active px-4 py-2 rounded-full text-xs font-semibold bg-white text-neutral-900 shadow-md transition-all">
+                    All Packages
+                </button>
+                <button onclick="filterPackages('hill')" id="tab-hill"
+                    class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white/15 hover:bg-white/25 text-white backdrop-blur-md transition-all">
+                    Hill Stations &amp; Nature
+                </button>
+                <button onclick="filterPackages('heritage')" id="tab-heritage"
+                    class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white/15 hover:bg-white/25 text-white backdrop-blur-md transition-all">
+                    Pilgrimage &amp; Heritage
+                </button>
+                <button onclick="filterPackages('international')" id="tab-international"
+                    class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white/15 hover:bg-white/25 text-white backdrop-blur-md transition-all">
+                    International Escapes
+                </button>
+            </div>
+        </div>
+
+        <!-- Wave Divider into Packages Grid -->
+        <div class="absolute bottom-0 inset-x-0 w-full leading-none -mb-[1px]">
+            <svg class="w-full h-8 sm:h-12 md:h-16 text-white fill-current block" viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+    </header>
+
+
+    <!-- ==================== PACKAGES DIRECTORY GRID ==================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-grid">
+
+            <!-- Package 1: Ooty & Nilgiris -->
+            <div class="package-card pkg-item pkg-hill bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-ooty.html'">
+                <a href="package-ooty.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80"
+                        alt="Ooty tea plantations" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Hill Station &amp; Valleys
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        4 Days / 3 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.9</span>
+                            <span class="text-neutral-400">(128 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-ooty.html">Ooty &amp; Nilgiris Queen of Hills</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Experience the UNESCO Nilgiri Mountain Toy Train, emerald Pykara waterfalls, Government Botanical Garden, and lush Doddabetta peak.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>3-Star Luxury Stay</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Private Cab Transfers</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="utensils" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Daily Breakfast</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="compass" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Guided Sightseeing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-ooty.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Ooty & Nilgiris Queen of Hills')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2: Paris & London -->
+            <div class="package-card pkg-item pkg-international bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-paris-london.html'">
+                <a href="package-paris-london.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80"
+                        alt="Eiffel Tower Paris" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        International Tour
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        7 Days / 6 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">5.0</span>
+                            <span class="text-neutral-400">(94 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-paris-london.html">Paris &amp; London Discovery</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Iconic European holiday exploring the Eiffel Tower, Seine river cruise, Louvre art collection, Big Ben, and London Eye panorama.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="plane" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Flights &amp; Eurostar</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>4-Star City Hotels</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Visa &amp; Insurance</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="compass" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>English Guided Tours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-paris-london.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Paris & London European Discovery')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 3: Vietnam & Cambodia -->
+            <div class="package-card pkg-item pkg-international bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-vietnam-cambodia.html'">
+                <a href="package-vietnam-cambodia.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80"
+                        alt="Vietnam Ha Long Bay" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Southeast Asia Heritage
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        6 Days / 5 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.8</span>
+                            <span class="text-neutral-400">(82 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-vietnam-cambodia.html">Vietnam &amp; Cambodia Explorer</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Discover the mystique of Angkor Wat in Siem Reap, overnight luxury cruise across Ha Long Bay, Hanoi Old Quarter, and Da Nang golden bridge.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="ship" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Ha Long Cruise Stay</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Boutique Resorts</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="utensils" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>All Meals Included</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="ticket" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>All Monument Passes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-vietnam-cambodia.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Vietnam & Cambodia Explorer')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 4: Rameshwaram & Madurai -->
+            <div class="package-card pkg-item pkg-heritage bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-rameshwaram.html'">
+                <a href="package-rameshwaram.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
+                        alt="Madurai Meenakshi Temple" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Spiritual &amp; Pilgrimage
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        4 Days / 3 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.9</span>
+                            <span class="text-neutral-400">(156 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-rameshwaram.html">Rameshwaram &amp; Madurai Circuit</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Holy darshan at Madurai Meenakshi Temple, sacred 22 theerthams at Ramanathaswamy Temple, iconic Pamban Sea Bridge, and Dhanushkodi.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>AC Vehicle Included</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Comfort Hotel Stays</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Darshan Assistance</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="utensils" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>South Indian Meals</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-rameshwaram.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Rameshwaram & Madurai Pilgrimage')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 5: Kodaikanal Princess of Hills -->
+            <div class="package-card pkg-item pkg-hill bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-kodaikanal.html'">
+                <a href="package-kodaikanal.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80"
+                        alt="Kodaikanal lake and pine forest" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Hill Station &amp; Valleys
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        3 Days / 2 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.8</span>
+                            <span class="text-neutral-400">(110 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-kodaikanal.html">Kodaikanal Princess of Hills</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Serene mountain retreat featuring Kodai Star Lake boating, Coaker's Walk, Pillar Rocks, Bryant Park, and Silver Cascade Waterfalls.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Valley View Resort</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Roundtrip Cab Transfer</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="utensils" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Breakfast Included</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="coffee" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Homemade Chocolates</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-kodaikanal.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Kodaikanal Princess of Hills')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 6: Coorg & Mysore -->
+            <div class="package-card pkg-item pkg-heritage pkg-hill bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-coorg.html'">
+                <a href="package-coorg.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=800&q=80"
+                        alt="Mysore Palace illuminated" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Palaces &amp; Coffee Plantations
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        5 Days / 4 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.9</span>
+                            <span class="text-neutral-400">(138 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-coorg.html">Coorg &amp; Mysore Royal Circuit</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Explore the grand illuminated Mysore Palace, Chamundi Hills, Abbey Falls in Coorg, Raja's Seat sunset, and aromatic coffee estate tours.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Plantation Homestay</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Private AC Vehicle</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="compass" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Palace Entry Passes</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="utensils" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Daily Breakfast</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-coorg.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Coorg & Mysore Royal Circuit')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 7: Dubai Desert & Skyline -->
+            <div class="package-card pkg-item pkg-international bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-dubai.html'">
+                <a href="package-dubai.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80"
+                        alt="Dubai Burj Khalifa" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        International Tour
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        5 Days / 4 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.9</span>
+                            <span class="text-neutral-400">(175 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-dubai.html">Dubai Desert &amp; Skyline Glitz</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Ascend Burj Khalifa 124th floor, dune bashing 4x4 desert safari with BBQ dinner, Dubai Marina yacht cruise, and gold souk shopping.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>4-Star City Hotel</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Airport Pick &amp; Drop</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="file-check" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>UAE Visa Included</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Desert Camp Show</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-dubai.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Dubai Desert & Skyline Glitz')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 8: Trivandrum & Kanyakumari -->
+            <div class="package-card pkg-item pkg-heritage bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-trivandrum.html'">
+                <a href="package-trivandrum.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80"
+                        alt="Kerala coastal beach and palm trees" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Coastal &amp; Heritage
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        4 Days / 3 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.9</span>
+                            <span class="text-neutral-400">(98 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-trivandrum.html">Trivandrum &amp; Kanyakumari</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Padmanabhaswamy Temple darshan, Kovalam lighthouse beach, Vivekananda Rock Memorial, and the confluence of three oceans at sunrise.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="hotel" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Beach Resort Stay</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Private Cab Transfers</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="utensils" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Authentic Kerala Meals</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="ship" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Ferry Boat Tickets</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-trivandrum.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Trivandrum & Kanyakumari Coastal')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 9: Bali Tropical Paradise -->
+            <div class="package-card pkg-item pkg-international pkg-hill bg-white rounded-3xl overflow-hidden border border-neutral-150 shadow-lg flex flex-col justify-between cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                onclick="if(!event.target.closest('button') && !event.target.closest('a')) window.location.href='package-bali.html'">
+                <a href="package-bali.html" class="relative h-60 bg-neutral-100 overflow-hidden block group">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80"
+                        alt="Bali temple and rice terraces" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-neutral-900 shadow-md">
+                        Tropical &amp; Honeymoon
+                    </div>
+                    <div class="absolute top-3 right-3 bg-neutral-900/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-amber-300 shadow-md">
+                        6 Days / 5 Nights
+                    </div>
+                </a>
+
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-amber-500 text-xs mb-1.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                            <span class="font-bold text-neutral-900">4.9</span>
+                            <span class="text-neutral-400">(142 Reviews)</span>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-bold text-neutral-900 hover:text-[#35658C] transition">
+                            <a href="package-bali.html">Bali Tropical Island Paradise</a>
+                        </h3>
+                        <p class="text-xs text-neutral-500 mt-2 leading-relaxed">
+                            Ubud jungle swing and rice terraces, Uluwatu sunset cliff temple, Nusa Penida island speedboat tour, and private pool villa stay.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 my-4 pt-3 border-t border-neutral-100 text-[11px] text-neutral-600">
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="home" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Private Pool Villa</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="ship" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Nusa Penida Cruise</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="heart" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Candlelight Dinner</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <i data-lucide="car" class="w-3.5 h-3.5 text-[#35658C]"></i>
+                                <span>Dedicated Tour Guide</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-neutral-400 uppercase font-bold block tracking-wider">Pricing</span>
+                            <span class="text-sm font-bold text-amber-700">Enquire for Best Price</span>
+                            <span class="text-[11px] text-neutral-500 block">Custom Quote on Request</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="package-bali.html"
+                                class="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold px-3.5 py-2.5 rounded-full transition">
+                                View Details
+                            </a>
+                            <button onclick="event.stopPropagation(); openEnquiryModal('Bali Tropical Island Paradise')"
+                                class="bg-[#121B24] hover:bg-neutral-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition shadow-md">
+                                Enquire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==================== CALL TO ACTION HORIZON ==================== -->
+    <section class="relative w-full bg-gradient-to-b from-[#3E749C] to-[#254C6B] text-white pt-20 pb-20 px-4 overflow-hidden">
+        <div class="relative z-10 max-w-3xl mx-auto text-center space-y-5">
+            <h3 class="font-editorial text-3xl sm:text-4xl md:text-5xl font-normal leading-tight text-white tracking-tight">
+                Looking for a Custom Itinerary?
+            </h3>
+            <p class="text-white/80 text-xs sm:text-sm max-w-md mx-auto">
+                Tell us your destination, dates, and group size. Our Coimbatore travel specialists will design a custom-budgeted package within 2 hours.
+            </p>
+            <div class="pt-2">
+                <button onclick="openEnquiryModal('Customized Travel Itinerary')"
+                    class="inline-flex items-center space-x-2 bg-white hover:bg-neutral-100 text-neutral-900 text-xs font-semibold pl-5 pr-2 py-2 rounded-full transition-all shadow-xl hover:scale-105">
+                    <span>Request Custom Quote</span>
+                    <div class="w-6 h-6 rounded-full bg-neutral-900 text-white flex items-center justify-center">
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Wave divider into footer -->
+        <div class="absolute bottom-0 inset-x-0 w-full leading-none -mb-[1px]">
+            <svg class="w-full h-8 sm:h-12 md:h-16 text-white fill-current block" viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-white text-neutral-900 py-12 px-4 sm:px-6 lg:px-10 border-t border-neutral-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+
+            <div class="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-3 text-center sm:text-left">
+                <span class="font-editorial text-2xl font-bold">The Royal Tours <span class="font-light italic text-amber-600">&amp; Travels</span></span>
+                <span class="text-xs text-neutral-400">| Coimbatore, Tamil Nadu</span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-neutral-600 font-medium">
+                <a href="index.html" class="hover:text-neutral-950 transition">Home</a>
+                <a href="about.html" class="hover:text-neutral-950 transition">About Us</a>
+                <a href="packages.html" class="text-neutral-950 font-bold">Tour Packages</a>
+                <a href="services.html" class="hover:text-neutral-950 transition">Services</a>
+                <a href="contact.html" class="hover:text-neutral-950 transition">Contact</a>
+            </div>
+
+            <div class="text-xs text-neutral-400 text-center sm:text-right">
+                © 2026 The Royal Tours and Travels. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL: BOOKING / ENQUIRY ==================== -->
+    <div id="modal-enquiry" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('modal-enquiry')"
+                class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="font-editorial text-2xl font-bold text-neutral-900">The Royal Tours &amp; Travels</span>
+                <p class="text-xs text-neutral-500 mt-1">Book your package or request a personalized itinerary quote.</p>
+            </div>
+
+            <form onsubmit="handleEnquirySubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Selected Package</label>
+                    <input type="text" id="enquiry-package-name" readonly
+                        class="w-full px-4 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-semibold text-neutral-900 focus:outline-none" />
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Your Full Name</label>
+                    <input type="text" required placeholder="e.g. Ramesh Kumar"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Phone / WhatsApp Number</label>
+                    <input type="tel" required placeholder="+91 98765 43210"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Travel Date</label>
+                        <input type="date" required
+                            class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Travelers</label>
+                        <select class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+                            <option>1 Adult (Solo)</option>
+                            <option selected>2 Adults (Couple)</option>
+                            <option>Family (3-5 Guests)</option>
+                            <option>Group (6+ Guests)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-[#121B24] hover:bg-neutral-800 text-white font-bold text-xs py-3.5 rounded-full transition shadow-md flex items-center justify-center space-x-2">
+                    <span>Enquire Now</span>
+                    <i data-lucide="send" class="w-4 h-4 text-amber-300"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // Modal Handlers
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function openEnquiryModal(pkgName) {
+            document.getElementById('enquiry-package-name').value = pkgName;
+            openModal('modal-enquiry');
+        }
+
+        function handleEnquirySubmit(e) {
+            closeModal('modal-enquiry');
+            if (window.handlePackageBooking) {
+                window.handlePackageBooking(e);
+            } else {
+                e.preventDefault();
+                showToast("🎉 Thank you! Your booking enquiry has been received.");
+            }
+        }
+
+        // Filter Packages by Category
+        function filterPackages(category) {
+            const items = document.querySelectorAll('.pkg-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                btn.className = 'filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white/15 hover:bg-white/25 text-white backdrop-blur-md transition-all';
+            });
+
+            const activeBtn = document.getElementById('tab-' + category);
+            if (activeBtn) {
+                activeBtn.className = 'filter-btn active px-4 py-2 rounded-full text-xs font-semibold bg-white text-neutral-900 shadow-md transition-all';
+            }
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains('pkg-' + category)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toast-message');
+            msg.textContent = message;
+
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+    <!-- API Client & Form Submissions -->
+    <script src="js/api.js"></script>
+</body>
+
+</html>

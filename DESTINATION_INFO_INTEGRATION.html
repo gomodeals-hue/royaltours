@@ -1,0 +1,108 @@
+<!-- 
+    DESTINATION INFO CARDS INTEGRATION TEMPLATE
+    Add this to each package HTML file in the main content area
+    
+    Usage:
+    1. Add the scripts to <head>:
+       <script src="js/destination-data.js"></script>
+       <script src="js/destination-info-cards.js"></script>
+    
+    2. Add this HTML where you want the cards to appear (usually after hero and before itinerary)
+    3. Update the data-package attribute to match the package key
+    4. Call the initialization script at the end of body
+-->
+
+<!-- EXAMPLE: Bali Package Page -->
+
+<!-- Add to <head> section -->
+<script src="js/destination-data.js"></script>
+<script src="js/destination-info-cards.js"></script>
+
+<!-- Add to main content area (after hero section, before itinerary) -->
+<div id="destination-info-container"></div>
+
+<!-- Add this initialization script at end of <body> -->
+<script>
+    // Initialize destination info cards when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initDestinationInfo('bali', '#destination-info-container');
+    });
+</script>
+
+
+<!-- 
+    COMPLETE EXAMPLE: Full integration for Bali package page
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... existing head content ... -->
+    <script src="js/destination-data.js"></script>
+    <script src="js/destination-info-cards.js"></script>
+</head>
+<body>
+    <!-- ... existing header and hero ... -->
+    
+    <!-- DESTINATION INFO CARDS SECTION -->
+    <div class="container mx-auto px-4">
+        <div id="destination-info-container"></div>
+    </div>
+    
+    <!-- ... rest of page content (itinerary, form, etc) ... -->
+    
+    <!-- INITIALIZATION SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initDestinationInfo('bali', '#destination-info-container');
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- 
+    PACKAGE KEY MAPPING
+    Use these keys in initDestinationInfo() call for each package:
+    
+    Package                 → Key
+    ────────────────────────────────
+    package-bali.html       → 'bali'
+    package-coorg.html      → 'coorg'
+    package-dubai.html      → 'dubai'
+    package-kodaikanal.html → 'kodaikanal'
+    package-ooty.html       → 'ooty'
+    package-paris-london.html → 'paris-london'
+    package-rameshwaram.html → 'rameshwaram'
+    package-trivandrum.html → 'trivandrum'
+    package-vietnam-cambodia.html → 'vietnam-cambodia'
+-->
+
+<!-- 
+    WHAT THE CARDS DISPLAY
+    
+    ✅ Climate: Temperature range (e.g., 24°C to 31°C)
+    ✅ Best Season: Ideal months to visit
+    ✅ Currency: Local currency name, code, exchange rate (real-time)
+    ✅ Visitor Stats: Annual visitor count
+    ✅ Languages: Spoken languages
+    ✅ Timezone: UTC offset
+    ✅ Calling Code: International dialing code
+    ✅ Driving Side: Left/Right hand traffic
+-->
+
+<!-- 
+    STYLING NOTES
+    
+    - Responsive grid: 1 column on mobile, 2 on tablet, 4 on desktop
+    - Color-coded cards: Amber (climate), Green (season), Blue (currency), Purple (visitors)
+    - Gradient backgrounds for visual appeal
+    - Icons using emoji for quick recognition
+    - Details section with darker background for additional info
+    
+    Customize colors by modifying:
+    - from-amber-50/to-amber-100 (climate card)
+    - from-green-50/to-green-100 (season card)
+    - from-blue-50/to-blue-100 (currency card)
+    - from-purple-50/to-purple-100 (visitor card)
+-->

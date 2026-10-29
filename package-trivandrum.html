@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trivandrum & Kanyakumari Tour (4D/3N) — The Royal Tours and Travels</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Destination Info Cards -->
+    <script src="js/destination-data.js"></script>
+    <script src="js/destination-info-cards.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        sky: {
+                            brand: '#6896BC',
+                            dark: '#4C799E',
+                            deep: '#2D5575',
+                            soft: '#EAF2F8'
+                        },
+                        sand: {
+                            wheat: '#E6BC86',
+                            light: '#F5E6CC'
+                        },
+                        darknavy: '#0E1721'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFFFF;
+            color: #1a1a1a;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F1F4F8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #A0B9CF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-amber-200 selection:text-neutral-900 bg-white">
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast"
+        class="fixed top-6 right-6 z-[60] transform translate-y-[-150%] opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-neutral-900 text-white px-5 py-3 rounded-full shadow-2xl border border-white/10 text-xs font-semibold">
+        <div class="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+        </div>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- ==================== STICKY NAVIGATION BAR ==================== -->
+    <nav id="main-navbar" class="fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 py-3.5 bg-[#0E1721]/95 backdrop-blur-xl shadow-2xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div class="flex items-center justify-between">
+
+                <!-- Logo -->
+                <a href="index.html"
+                    class="font-editorial text-xl sm:text-2xl md:text-3xl text-white font-bold tracking-tight hover:opacity-90 transition">
+                    The Royal Tours <span class="font-light italic text-amber-200">&amp; Travels</span>
+                </a>
+
+                <!-- Center Nav Pill (Frosted Glass) -->
+                <div
+                    class="hidden md:flex items-center space-x-7 bg-white/15 backdrop-blur-md px-7 py-2.5 rounded-full border border-white/25 text-white text-xs font-medium shadow-sm">
+                    <a href="index.html" class="hover:text-amber-200 transition">Home</a>
+                    <a href="about.html" class="hover:text-amber-200 transition">About Us</a>
+                    <a href="packages.html" class="text-amber-200 font-bold hover:text-amber-300 transition">Packages</a>
+                    <a href="services.html" class="hover:text-amber-200 transition">Services</a>
+                    <a href="contact.html" class="hover:text-amber-200 transition">Contact</a>
+                </div>
+
+                <!-- Right CTA: Sign In Pill with Arrow -->
+                <div class="flex items-center space-x-3">
+                    <a href="packages.html"
+                        class="group flex items-center space-x-2.5 bg-white hover:bg-neutral-100 text-neutral-900 text-xs font-semibold pl-5 pr-2 py-1.5 rounded-full transition-all duration-200 shadow-md">
+                        <span>All Packages</span>
+                        <div
+                            class="w-6 h-6 rounded-full bg-neutral-900 text-white flex items-center justify-center transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </div>
+                    </a>
+
+                    <!-- Mobile Nav Hamburger -->
+                    <button onclick="toggleMobileMenu()"
+                        class="md:hidden text-white p-2 rounded-full bg-white/20 backdrop-blur-md">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown -->
+            <div id="mobile-menu"
+                class="hidden md:hidden mt-3 p-4 bg-[#121B24]/95 backdrop-blur-xl rounded-2xl text-white text-sm flex-col space-y-3 border border-white/10 shadow-xl">
+                <a href="index.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Home</a>
+                <a href="about.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">About Us</a>
+                <a href="packages.html" onclick="toggleMobileMenu()" class="py-1 text-amber-200 font-bold">Packages</a>
+                <a href="services.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Services</a>
+                <a href="contact.html" onclick="toggleMobileMenu()" class="py-1 hover:text-amber-200">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== PACKAGE HERO HEADER ==================== -->
+    <header class="relative w-full bg-[#121B24] text-white pt-36 pb-20 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-30">
+            <img src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=1800&q=80"
+                alt="Kovalam Lighthouse Beach & Kanyakumari Sunset" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121B24] via-[#121B24]/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div class="flex flex-wrap items-center gap-3 text-xs mb-4">
+                <span class="bg-amber-500/20 text-amber-300 font-bold px-3 py-1 rounded-full border border-amber-500/30">
+                    Coastal &amp; Spiritual
+                </span>
+                <span class="bg-white/15 text-white font-medium px-3 py-1 rounded-full backdrop-blur-md">
+                    4 Days / 3 Nights
+                </span>
+                <span class="bg-white/15 text-white font-medium px-3 py-1 rounded-full backdrop-blur-md">
+                    Trivandrum + Kovalam + Kanyakumari
+                </span>
+            </div>
+
+            <h1 class="font-editorial text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-tight">
+                Trivandrum &amp; Kanyakumari Coastal Heritage
+            </h1>
+
+            <div class="flex flex-wrap items-center justify-between gap-6 mt-6 pt-6 border-t border-white/15">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-1 text-amber-400">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <span class="font-bold text-white text-sm">4.9</span>
+                        <span class="text-white/60 text-xs">(98 Verified Reviews)</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <span class="inline-flex items-center space-x-2 bg-amber-400/20 border border-amber-300/40 text-amber-200 px-4 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+                        <span>Enquire for Best Price Quotation</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wave Divider into Details -->
+        <div class="absolute bottom-0 inset-x-0 w-full leading-none -mb-[1px]">
+            <svg class="w-full h-8 sm:h-12 md:h-16 text-white fill-current block" viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,45 Q60,10 120,45 T240,45 T360,45 T480,45 T600,45 T720,45 T840,45 T960,45 T1080,45 T1200,45 T1320,45 T1440,45 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- ==================== ITINERARY & BOOKING DETAILS ==================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16">
+        <!-- Destination Info Container -->
+        <div id="destination-info-container"></div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+            <!-- Left 8 Columns: Day by Day Itinerary -->
+            <div class="lg:col-span-8 space-y-10">
+
+                <!-- ==================== INTERACTIVE MULTI-IMAGE GALLERY ==================== -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="camera" class="w-5 h-5 text-[#35658C]"></i>
+                            <h2 class="font-editorial text-2xl font-bold text-neutral-900">Destination &amp; Experience Gallery</h2>
+                        </div>
+                        <span class="text-xs text-neutral-500 font-medium hidden sm:inline">Click any thumbnail to preview</span>
+                    </div>
+
+                    <!-- Main Highlight Image Display -->
+                    <div class="relative w-full h-80 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-neutral-200 group bg-neutral-950">
+                        <img id="main-gallery-hero"
+                            src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80"
+                            alt="Kovalam Lighthouse Beach & Ocean"
+                            class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 flex items-center justify-between text-white pointer-events-none">
+                            <div>
+                                <span class="text-[10px] uppercase tracking-wider font-bold text-amber-300 block">Featured Highlight</span>
+                                <h3 id="main-gallery-caption" class="font-editorial text-lg sm:text-xl font-bold">Kovalam Lighthouse Crescent Beach</h3>
+                            </div>
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/20">
+                                📸 6 Curated Sights
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Thumbnails Carousel -->
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
+                        <button type="button" onclick="switchMainGalleryImage('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80', 'Kovalam Lighthouse Crescent Beach', this)"
+                            class="gallery-thumb-btn ring-2 ring-amber-400 border-amber-400 rounded-2xl overflow-hidden h-20 bg-neutral-100 transition relative group">
+                            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=300&q=80" alt="Kovalam Beach" class="w-full h-full object-cover group-hover:scale-110 transition" />
+                        </button>
+                        <button type="button" onclick="switchMainGalleryImage('https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=80', 'Sree Padmanabhaswamy Dravidian Temple Splendour', this)"
+                            class="gallery-thumb-btn opacity-70 hover:opacity-100 rounded-2xl overflow-hidden h-20 bg-neutral-100 transition relative group">
+                            <img src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=300&q=80" alt="Padmanabhaswamy Temple" class="w-full h-full object-cover group-hover:scale-110 transition" />
+                        </button>
+                        <button type="button" onclick="switchMainGalleryImage('https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80', 'Poovar Island Backwater Boat Cruise & Golden Sands', this)"
+                            class="gallery-thumb-btn opacity-70 hover:opacity-100 rounded-2xl overflow-hidden h-20 bg-neutral-100 transition relative group">
+                            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=300&q=80" alt="Poovar Backwaters" class="w-full h-full object-cover group-hover:scale-110 transition" />
+                        </button>
+                        <button type="button" onclick="switchMainGalleryImage('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', 'Arabian Sea Sunset over Samudra Shore', this)"
+                            class="gallery-thumb-btn opacity-70 hover:opacity-100 rounded-2xl overflow-hidden h-20 bg-neutral-100 transition relative group">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" alt="Samudra Beach" class="w-full h-full object-cover group-hover:scale-110 transition" />
+                        </button>
+                        <button type="button" onclick="switchMainGalleryImage('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80', 'Traditional Kerala Ayurvedic Wellness & Rejuvenation', this)"
+                            class="gallery-thumb-btn opacity-70 hover:opacity-100 rounded-2xl overflow-hidden h-20 bg-neutral-100 transition relative group">
+                            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=300&q=80" alt="Ayurvedic Wellness" class="w-full h-full object-cover group-hover:scale-110 transition" />
+                        </button>
+                        <button type="button" onclick="switchMainGalleryImage('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80', 'Napier Museum & Indo-Saracenic Architecture', this)"
+                            class="gallery-thumb-btn opacity-70 hover:opacity-100 rounded-2xl overflow-hidden h-20 bg-neutral-100 transition relative group">
+                            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=300&q=80" alt="Napier Museum" class="w-full h-full object-cover group-hover:scale-110 transition" />
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Overview Card -->
+                <div class="p-8 rounded-3xl bg-neutral-50 border border-neutral-150">
+                    <h2 class="font-editorial text-2xl font-bold text-neutral-900 mb-3">Trip Overview</h2>
+                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                        Journey to India's southernmost land's end with <strong>The Royal Tours &amp; Travels</strong>. Visit the magnificent Sree Padmanabhaswamy Temple, relax at Kovalam’s crescent lighthouse beach, explore the historic Padmanabhapuram Teakwood Palace, take the ferry to Vivekananda Rock Memorial &amp; Thiruvalluvar Statue, and watch the breathtaking sunset over the confluence of three oceans.
+                    </p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-neutral-200 text-xs">
+                        <div>
+                            <span class="text-neutral-400 text-[10px] uppercase font-bold block">Duration</span>
+                            <span class="font-bold text-neutral-900">4 Days / 3 Nights</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-400 text-[10px] uppercase font-bold block">Stay</span>
+                            <span class="font-bold text-neutral-900">Beachfront &amp; City Hotels</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-400 text-[10px] uppercase font-bold block">Vehicle</span>
+                            <span class="font-bold text-neutral-900">Private AC Sedan</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-400 text-[10px] uppercase font-bold block">Meals</span>
+                            <span class="font-bold text-neutral-900">Daily Breakfast</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day-by-Day Plan -->
+                <div>
+                    <h3 class="font-editorial text-2xl sm:text-3xl font-bold text-neutral-900 mb-6">Day-by-Day Itinerary</h3>
+
+                    <div class="space-y-6 border-l-2 border-[#35658C]/20 pl-6 ml-3">
+
+                        <div class="relative">
+                            <div class="absolute -left-[33px] top-0 w-6 h-6 rounded-full bg-[#35658C] text-white flex items-center justify-center text-xs font-bold">1</div>
+                            <h4 class="font-editorial text-lg font-bold text-neutral-900">Day 1: Arrival in Trivandrum &amp; Kovalam Beach Sunset</h4>
+                            <p class="text-xs sm:text-sm text-neutral-600 mt-2 leading-relaxed">
+                                Pick up from Trivandrum Airport / Railway Station. Transfer to beach resort in Kovalam. Spend the evening relaxing at Lighthouse Beach and Hawa Beach.
+                            </p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-[33px] top-0 w-6 h-6 rounded-full bg-[#35658C] text-white flex items-center justify-center text-xs font-bold">2</div>
+                            <h4 class="font-editorial text-lg font-bold text-neutral-900">Day 2: Padmanabhaswamy Temple &amp; Napier Museum</h4>
+                            <p class="text-xs sm:text-sm text-neutral-600 mt-2 leading-relaxed">
+                                Early morning darshan at the opulent Sree Padmanabhaswamy Temple. Visit Kuthiramalika Palace Museum, Napier Museum, and Poovar Island backwater boat cruise through mangrove forests.
+                            </p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-[33px] top-0 w-6 h-6 rounded-full bg-[#35658C] text-white flex items-center justify-center text-xs font-bold">3</div>
+                            <h4 class="font-editorial text-lg font-bold text-neutral-900">Day 3: Padmanabhapuram Palace &amp; Kanyakumari Sunset</h4>
+                            <p class="text-xs sm:text-sm text-neutral-600 mt-2 leading-relaxed">
+                                Drive to Kanyakumari via the historic Padmanabhapuram wooden palace. Ferry ride to Vivekananda Rock Memorial &amp; 133-ft Thiruvalluvar Statue. Witness sunset over the Triveni Sangam (Arabian Sea, Bay of Bengal, and Indian Ocean).
+                            </p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-[33px] top-0 w-6 h-6 rounded-full bg-[#35658C] text-white flex items-center justify-center text-xs font-bold">4</div>
+                            <h4 class="font-editorial text-lg font-bold text-neutral-900">Day 4: Sunrise over Ocean &amp; Departure</h4>
+                            <p class="text-xs sm:text-sm text-neutral-600 mt-2 leading-relaxed">
+                                Watch the magnificent sunrise over the ocean. Visit Bhagavathy Amman Temple and Gandhi Memorial. Transfer to Trivandrum / Kanyakumari Railway Station for departure.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Inclusions & Exclusions Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-neutral-150">
+                    <div class="p-6 rounded-3xl bg-emerald-50 border border-emerald-100">
+                        <h4 class="font-bold text-sm text-emerald-950 mb-3 flex items-center space-x-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                            <span>Package Inclusions</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs text-emerald-900">
+                            <li>✓ 2 Nights stay in Kovalam + 1 Night in Kanyakumari</li>
+                            <li>✓ Dedicated private AC cab for all transfers</li>
+                            <li>✓ Daily breakfast at the hotel</li>
+                            <li>✓ Ferry ticket assistance for Vivekananda rock</li>
+                            <li>✓ Driver allowance, tolls, parking, fuel included</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 rounded-3xl bg-neutral-50 border border-neutral-150">
+                        <h4 class="font-bold text-sm text-neutral-900 mb-3 flex items-center space-x-2">
+                            <i data-lucide="x-circle" class="w-4 h-4 text-neutral-400"></i>
+                            <span>Package Exclusions</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs text-neutral-600">
+                            <li>✕ Poovar mangrove boating charges</li>
+                            <li>✕ Temple special pooja charges</li>
+                            <li>✕ Lunch &amp; Dinner meals</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right 4 Columns: Direct Booking Sidebar -->
+            <div class="lg:col-span-4">
+                <div class="sticky top-28 p-8 rounded-3xl bg-white border border-neutral-150 shadow-xl space-y-6">
+                    <div>
+                        <span class="text-xs text-neutral-400 font-bold uppercase block tracking-wider">Package Pricing</span>
+                        <div class="flex items-baseline space-x-2 mt-1">
+                            <span class="text-2xl font-bold text-neutral-900">Enquire for Best Price</span>
+                        </div>
+                        <span class="inline-block text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full mt-2">
+                            Beach Resort &amp; Cab Quote
+                        </span>
+                    </div>
+
+                                        <form onsubmit="handlePackageBooking(event)" class="pt-4 border-t border-neutral-100 space-y-3">
+                        <!-- Row 1: Name + Email -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Full Name</label>
+                                <input type="text" name="name" required placeholder="e.g. Anand Kumar"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Email</label>
+                                <input type="email" name="email" required placeholder="your@email.com"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                            </div>
+                        </div>
+                        <!-- Row 2: Phone + Date -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">WhatsApp</label>
+                                <input type="tel" name="phone" required placeholder="+91 98765 43210"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Travel Date</label>
+                                <input type="date" name="travel_date" required
+                                    class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                            </div>
+                        </div>
+                        <!-- Row 3: Occasion -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Occasion</label>
+                            <select name="occasion" class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+                                <option value="">-- Select Occasion --</option>
+                                <option>Honeymoon</option>
+                                <option>Family Vacation</option>
+                                <option>Corporate Team Outing</option>
+                                <option>College Trip</option>
+                                <option>Adventure Getaway</option>
+                            </select>
+                        </div>
+                        <!-- Row 4: Travellers -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Travellers</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="relative">
+                                    <input type="number" name="seniors" min="0" value="0"
+                                        class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs text-center focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                                    <span class="absolute -bottom-4 left-0 right-0 text-center text-[9px] text-neutral-400 font-semibold">Seniors</span>
+                                </div>
+                                <div class="relative">
+                                    <input type="number" name="adults" min="0" value="0"
+                                        class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs text-center focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                                    <span class="absolute -bottom-4 left-0 right-0 text-center text-[9px] text-neutral-400 font-semibold">Adults</span>
+                                </div>
+                                <div class="relative">
+                                    <input type="number" name="children" min="0" value="0"
+                                        class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs text-center focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                                    <span class="absolute -bottom-4 left-0 right-0 text-center text-[9px] text-neutral-400 font-semibold">Children</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row 5: Special Pax + Travel Mode -->
+                        <div class="grid grid-cols-2 gap-2 pt-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Special Pax</label>
+                                <input type="text" name="special_passengers" placeholder="Pregnant, Disabled..."
+                                    class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Travel Mode</label>
+                                <select name="travel_mode" class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+                                    <option value="">-- Mode --</option>
+                                    <option>Flight</option>
+                                    <option>Train</option>
+                                    <option>Bus</option>
+                                    <option>Cab</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Row 6: Hotel -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Hotel Preference</label>
+                            <select name="hotel_type" class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none">
+                                <option value="">-- Star Rating --</option>
+                                <option>5 Star</option>
+                                <option>4 Star</option>
+                                <option>3 Star</option>
+                                <option>2 Star</option>
+                                <option>1 Star</option>
+                            </select>
+                        </div>
+                        <!-- Row 7: Message -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-neutral-600 uppercase mb-1">Message</label>
+                            <textarea name="message" placeholder="Any special requests or notes..."
+                                class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#35658C] focus:outline-none resize-none" rows="2"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-[#121B24] hover:bg-neutral-800 text-white font-bold text-xs py-3.5 rounded-full transition shadow-md hover:scale-[1.01] flex items-center justify-center space-x-2">
+                            <span>Enquire Now</span>
+                            <i data-lucide="send" class="w-4 h-4 text-amber-300"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-white text-neutral-900 py-12 px-4 sm:px-6 lg:px-10 border-t border-neutral-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+
+            <div class="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-3 text-center sm:text-left">
+                <span class="font-editorial text-2xl font-bold">The Royal Tours <span class="font-light italic text-amber-600">&amp; Travels</span></span>
+                <span class="text-xs text-neutral-400">| Coimbatore, Tamil Nadu</span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-neutral-600 font-medium">
+                <a href="index.html" class="hover:text-neutral-950 transition">Home</a>
+                <a href="about.html" class="hover:text-neutral-950 transition">About Us</a>
+                <a href="packages.html" class="hover:text-neutral-950 transition">Tour Packages</a>
+                <a href="services.html" class="hover:text-neutral-950 transition">Services</a>
+                <a href="contact.html" class="hover:text-neutral-950 transition">Contact</a>
+            </div>
+
+            <div class="text-xs text-neutral-400 text-center sm:text-right">
+                © 2026 The Royal Tours and Travels. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        lucide.createIcons();
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        function handlePackageBooking(e) {
+            e.preventDefault();
+            showToast("🎉 Thank you! Your booking enquiry for Trivandrum & Kanyakumari Tour has been received. Our team will contact you shortly.");
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toast-message');
+            msg.textContent = message;
+
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+    <!-- API Client & Form Submissions -->
+    <script src="js/api.js"></script>
+    <!-- Initialize Destination Info Cards -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initDestinationInfo('trivandrum', '#destination-info-container');
+        });
+    </script>
+</body>
+
+</html>

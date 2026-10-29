@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Royal Tours and Travels — Discover New Destinations & Nest Memories</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#111315',
+                            surface: '#F8F9FA',
+                            border: '#E8EAED',
+                            muted: '#717680',
+                            ocean: '#0E8A8A'
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '24px',
+                        '4xl': '32px',
+                        '5xl': '42px'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFFFF;
+            color: #111315;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Staggered Glassmorphic Pill Cloud */
+        .hero-glass-pill {
+            background: rgba(20, 24, 30, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-glass-pill:hover {
+            background: rgba(255, 255, 255, 0.92);
+            color: #111315;
+            border-color: #FFFFFF;
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        /* Floating Thumbnails */
+        .thumb-card {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .thumb-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Mouse Indicator Scroll Animation */
+        @keyframes mouseScroll {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(5px);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .mouse-dot-scroll {
+            animation: mouseScroll 1.6s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F4F4F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-teal-100 selection:text-neutral-900 bg-white">
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast"
+        class="fixed top-6 right-6 z-50 transform translate-y-[-150%] opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-neutral-900 text-white px-5 py-3 rounded-full shadow-2xl border border-white/10 text-xs font-semibold">
+        <div class="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+        </div>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- ==================== TOP NAVIGATION ==================== -->
+    <nav class="w-full max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 pb-4">
+        <div class="flex items-center justify-between">
+
+            <!-- Brand Logo -->
+            <a href="#"
+                class="text-xl sm:text-2xl font-extrabold tracking-tight text-[#111315] hover:opacity-90 transition">
+                Royal Tours &amp; Travels
+            </a>
+
+            <!-- Center Pill Nav Tabs -->
+            <div
+                class="hidden sm:flex items-center space-x-2 bg-white px-3 py-1.5 rounded-full border border-neutral-200/80 shadow-sm text-xs font-medium text-neutral-600">
+                <a href="#hero"
+                    class="px-4 py-1.5 rounded-full text-neutral-900 font-bold bg-neutral-100 transition">Trip</a>
+                <a href="#adventure" class="px-4 py-1.5 rounded-full hover:text-neutral-950 transition">Adventure</a>
+                <a href="#gallery" class="px-4 py-1.5 rounded-full hover:text-neutral-950 transition">Gallery</a>
+            </div>
+
+            <!-- Right Auth Buttons (Log In / Sign up pill) -->
+            <div class="flex items-center space-x-2">
+                <button onclick="openAuthModal('login')"
+                    class="text-xs font-semibold px-4 py-2 rounded-full border border-neutral-200/80 bg-white hover:bg-neutral-50 text-neutral-800 transition">
+                    Log In
+                </button>
+                <button onclick="openAuthModal('signup')"
+                    class="text-xs font-bold px-5 py-2 rounded-full bg-[#111315] hover:bg-neutral-800 text-white transition shadow-sm">
+                    Sign up
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION (DISCOVER NEW DESTINATIONS) ==================== -->
+    <header id="hero" class="w-full max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 pt-4 pb-14">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+            <!-- ================= LEFT COLUMN ================= -->
+            <div class="lg:col-span-5 flex flex-col justify-between pt-3">
+
+                <div>
+                    <!-- Hero Headline (Exact 4-line typography) -->
+                    <h1
+                        class="text-4xl sm:text-5xl lg:text-[54px] font-extrabold tracking-[-0.03em] text-[#111315] leading-[1.06]">
+                        Discover New<br />
+                        Destinations &<br />
+                        Nest Memories<br />
+                        with TripNest
+                    </h1>
+
+                    <!-- Mouse Scroll Indicator with Dashed Horizontal Track -->
+                    <div class="flex items-center space-x-3 my-7 max-w-sm">
+                        <div
+                            class="w-5 h-8 rounded-full border-2 border-neutral-300 flex items-start justify-center p-1 flex-shrink-0">
+                            <div class="w-1.5 h-1.5 bg-neutral-400 rounded-full mouse-dot-scroll"></div>
+                        </div>
+                        <div class="flex-1 border-t border-dashed border-neutral-300 h-0"></div>
+                    </div>
+                </div>
+
+                <!-- Lower Block: Uppercase Description + 3 Thumbnail Cards -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 pt-2">
+
+                    <!-- Narrow Uppercase Microcopy -->
+                    <div class="max-w-[125px] flex-shrink-0">
+                        <p class="text-[9px] uppercase tracking-wider text-neutral-400 font-bold leading-[1.45]">
+                            VESPA MATIC IS AN ENVIRONMENTALLY FESENDLY CHOICE WITH AN ENGINE THAT IS EFFICIENT IN FUEL
+                            CONSUMPTION.
+                        </p>
+                    </div>
+
+                    <!-- 3 Interactive Destination Thumbnail Cards -->
+                    <div class="grid grid-cols-3 gap-2.5 flex-1 w-full sm:w-auto">
+
+                        <!-- Thumbnail 1: Lambook -->
+                        <div onclick="switchHeroDestination('Lambook', 'Lombok, Indonesia', 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=85', ['LANDSCAPE', 'EXCURSION', 'ISLAND', 'SURF', 'SECRET BAY'], this)"
+                            class="thumb-card group relative rounded-2xl overflow-hidden aspect-[4/4.8] cursor-pointer border-2 border-transparent hover:border-neutral-900 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80"
+                                alt="Lambook"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                            </div>
+                            <span
+                                class="absolute bottom-2 inset-x-0 text-center text-[10px] font-bold text-white tracking-wide">
+                                Lambook
+                            </span>
+                        </div>
+
+                        <!-- Thumbnail 2: Sun Siyam (Active State) -->
+                        <div onclick="switchHeroDestination('Sun Siyam', 'Maldives', 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1600&q=85', ['LANDSCAPE', 'EXCURSION', 'JOURNEY', 'EXCITING', 'TRAVEL', 'BEACH'], this)"
+                            class="thumb-card group relative rounded-2xl overflow-hidden aspect-[4/4.8] cursor-pointer border-2 border-neutral-900 shadow-md">
+                            <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=400&q=80"
+                                alt="Sun Siyam"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                            </div>
+                            <span
+                                class="absolute bottom-2 inset-x-0 text-center text-[10px] font-bold text-white tracking-wide">
+                                Sun Siyam
+                            </span>
+                        </div>
+
+                        <!-- Thumbnail 3: Fushi -->
+                        <div onclick="switchHeroDestination('Fushi', 'Phi Phi Lagoon', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=85', ['LAGOON', 'EXPLORE', 'SNORKELING', 'COASTAL', 'SAILING'], this)"
+                            class="thumb-card group relative rounded-2xl overflow-hidden aspect-[4/4.8] cursor-pointer border-2 border-transparent hover:border-neutral-900 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80"
+                                alt="Fushi"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+                            </div>
+                            <span
+                                class="absolute bottom-2 inset-x-0 text-center text-[10px] font-bold text-white tracking-wide">
+                                Fushi
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= RIGHT COLUMN: FEATURED VISTA WITH FLOATING PILLS ================= -->
+            <div class="lg:col-span-7">
+                <div
+                    class="relative rounded-4xl sm:rounded-5xl overflow-hidden aspect-[4/3.7] sm:aspect-[4/3.3] lg:aspect-[4/3.1] bg-neutral-900 shadow-2xl group border border-neutral-100">
+
+                    <!-- Main Hero Tropical Image -->
+                    <img id="hero-main-img"
+                        src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1800&q=88"
+                        alt="Maldives Thatch Beach Umbrella & Crystal Waters"
+                        class="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-700 filter brightness-[1.02]" />
+
+                    <!-- Gradient Shadow for Bottom Glass Tags -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent pointer-events-none">
+                    </div>
+
+                    <!-- Staggered Floating Glassmorphic Pill Cloud (Exact layout from design) -->
+                    <div class="absolute bottom-6 sm:bottom-8 left-6 sm:left-8 z-20 flex flex-col gap-2"
+                        id="hero-tag-cluster">
+
+                        <!-- Row 1: [ LANDSCAPE ] [ EXCURSION ] -->
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                LANDSCAPE
+                            </span>
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                EXCURSION
+                            </span>
+                        </div>
+
+                        <!-- Row 2: [ JOURNEY ] [ EXCITING ] [ TRAVEL ] -->
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                JOURNEY
+                            </span>
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                EXCITING
+                            </span>
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                TRAVEL
+                            </span>
+                        </div>
+
+                        <!-- Row 3: [ BEACH ] [ EXCITING ] -->
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                BEACH
+                            </span>
+                            <span
+                                class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">
+                                EXCITING
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- ==================== SECTION: FIND YOUR ROOM HERE ==================== -->
+    <section id="trip" class="w-full max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 py-10">
+
+        <!-- Section Title -->
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-[#111315] tracking-tight mb-6">
+            Find Your Room Here
+        </h2>
+
+        <!-- Search Engine Bar (Check in / Check out / Guest / Search Room) -->
+        <div class="bg-white rounded-3xl sm:rounded-full p-2.5 sm:p-3 shadow-sm border border-neutral-200/80 mb-12">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center text-xs gap-3 sm:gap-0">
+
+                <!-- Check in -->
+                <div class="flex-1 px-5 py-2 border-b sm:border-b-0 sm:border-r border-neutral-200 flex items-center justify-between cursor-pointer hover:bg-neutral-50 rounded-2xl sm:rounded-none transition"
+                    onclick="showToast('Selected check-in date: 1 November 2024')">
+                    <div>
+                        <span class="block text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Check
+                            in</span>
+                        <div class="flex items-center space-x-2 mt-0.5 font-bold text-neutral-800">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5 text-neutral-500"></i>
+                            <span>1 November 2024</span>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-neutral-400"></i>
+                </div>
+
+                <!-- Check out -->
+                <div class="flex-1 px-5 py-2 border-b sm:border-b-0 sm:border-r border-neutral-200 flex items-center justify-between cursor-pointer hover:bg-neutral-50 rounded-2xl sm:rounded-none transition"
+                    onclick="showToast('Selected check-out date: 6 November 2024')">
+                    <div>
+                        <span class="block text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Check
+                            out</span>
+                        <div class="flex items-center space-x-2 mt-0.5 font-bold text-neutral-800">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5 text-neutral-500"></i>
+                            <span>1 November 2024</span>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-neutral-400"></i>
+                </div>
+
+                <!-- Guest -->
+                <div class="flex-1 px-5 py-2 flex items-center justify-between cursor-pointer hover:bg-neutral-50 rounded-2xl sm:rounded-none transition"
+                    onclick="showToast('Guests: 2 Guest, 2 Children')">
+                    <div>
+                        <span
+                            class="block text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Guest</span>
+                        <div class="flex items-center space-x-2 mt-0.5 font-bold text-neutral-800">
+                            <i data-lucide="users" class="w-3.5 h-3.5 text-neutral-500"></i>
+                            <span>2 Guest, 2 Children</span>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-neutral-400"></i>
+                </div>
+
+                <!-- Search Room Button (Exact black capsule with search icon) -->
+                <div class="p-1 sm:pl-2">
+                    <button onclick="triggerRoomSearch()"
+                        class="w-full sm:w-auto bg-[#111315] hover:bg-neutral-800 text-white font-bold text-xs px-7 py-3.5 rounded-full transition shadow-md flex items-center justify-center space-x-2">
+                        <span>Search Room</span>
+                        <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ==================== ROOM SHOWCASE PREVIEW GRID ==================== -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            <!-- Left Large Lagoon Visual with Boat -->
+            <div class="lg:col-span-4">
+                <div class="relative rounded-3xl overflow-hidden aspect-[4/3.4] bg-neutral-900 shadow-md group">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80"
+                        alt="Lagoon View Villa boat"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                </div>
+            </div>
+
+            <!-- Center Room Description & Inclusions -->
+            <div class="lg:col-span-4 flex flex-col justify-between h-full space-y-4 pt-1">
+                <div>
+                    <h3 class="text-2xl font-bold text-[#111315] tracking-tight">
+                        Lagoon View Villa
+                    </h3>
+                    <p class="text-xs text-neutral-500 font-normal leading-relaxed mt-2.5">
+                        Immerse yourself in tranquility with stunning views of the serene lagoon right from your $5.
+                        Each Lagoon View Villa is designed with natural wood accents, large sliding glass doors, and a
+                        minimalist aesthetic that blends seamlessly with the surrounding environment.
+                    </p>
+                </div>
+
+                <!-- Small preview thumbnail strip -->
+                <div class="flex items-center space-x-3 pt-2">
+                    <div class="w-20 h-14 rounded-xl overflow-hidden border border-neutral-200">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=200&q=80"
+                            alt="Villa preview" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="w-20 h-14 rounded-xl overflow-hidden border border-neutral-200">
+                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=200&q=80"
+                            alt="Villa preview" class="w-full h-full object-cover" />
+                    </div>
+                    <button onclick="openBookingDrawer('Lagoon View Villa', '$340/night')"
+                        class="text-xs font-bold text-neutral-900 hover:text-teal-700 pl-2 underline">
+                        View details →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Card: Hawaiian Chicken Smoked Pizza / Island Food Experience -->
+            <div class="lg:col-span-4">
+                <div class="relative rounded-3xl overflow-hidden aspect-[4/3.4] bg-neutral-900 shadow-md group">
+                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80"
+                        alt="Island Gastronomy"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                    <div class="absolute top-4 left-4 flex items-center space-x-2">
+                        <span
+                            class="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white">Natural</span>
+                        <span
+                            class="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white">Organics</span>
+                    </div>
+
+                    <div class="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold leading-tight">Hawaiian Chicken<br />Smoked Pizza</h4>
+                            <span class="text-xs font-bold text-amber-300 mt-1 block">$120 <span
+                                    class="text-[10px] text-white/70 font-normal">/day</span></span>
+                        </div>
+                        <button onclick="openBookingDrawer('Island Dining Package', '$120/day')"
+                            class="bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-[11px] px-4 py-2 rounded-full shadow transition">
+                            Check Availability
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== SECTION: ISLAND OF GODS / EXPERIENCES ==================== -->
+    <section id="adventure"
+        class="w-full max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 py-16 border-t border-neutral-100">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+
+            <!-- Headline on left -->
+            <div class="lg:col-span-8">
+                <span class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2 block">About Us</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-[#111315] tracking-tight leading-tight max-w-2xl">
+                    Discover the beauty of the Island of Gods with its breathtaking beaches, terraced rice fields, and
+                    rich culture.
+                </h2>
+            </div>
+
+            <!-- Carousel Navigation Arrows (Exact circles with arrows) -->
+            <div class="lg:col-span-4 flex justify-start lg:justify-end items-center space-x-2 pt-4">
+                <button onclick="shiftExperience(-1)"
+                    class="w-10 h-10 rounded-full bg-white border border-neutral-200 hover:bg-neutral-100 flex items-center justify-center transition shadow-sm">
+                    <i data-lucide="arrow-left" class="w-4 h-4 text-neutral-800"></i>
+                </button>
+                <button onclick="shiftExperience(1)"
+                    class="w-10 h-10 rounded-full bg-[#111315] hover:bg-neutral-800 text-white flex items-center justify-center transition shadow-sm">
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Overwater Bungalows Boardwalk & Hotel List -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+            <div class="lg:col-span-8">
+                <div class="rounded-4xl overflow-hidden aspect-[16/9] bg-neutral-900 shadow-xl relative group">
+                    <img id="experience-img"
+                        src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1400&q=85"
+                        alt="Overwater bungalows boardwalk"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div
+                        class="absolute bottom-6 left-6 text-white bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-2xl">
+                        <h4 id="experience-title" class="text-base font-bold">Sun Siyam Iru Fushi, Maldives</h4>
+                        <p class="text-xs text-white/80">South Atoll • Private Island Sanctuary</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Hotel Selector List (Repeated exact lines from design) -->
+            <div class="lg:col-span-4 space-y-3">
+                <div onclick="selectExperience('Sun Siyam Iru Fushi, Maldives', 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1400&q=85')"
+                    class="p-3.5 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 cursor-pointer transition flex items-center justify-between text-xs font-bold text-neutral-800 shadow-sm">
+                    <span>Sun Siyam Iru Fushi, Maldives</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-400"></i>
+                </div>
+                <div onclick="selectExperience('Sun Siyam Iru Fushi, Maldives', 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1400&q=85')"
+                    class="p-3.5 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 cursor-pointer transition flex items-center justify-between text-xs font-bold text-neutral-800 shadow-sm">
+                    <span>Sun Siyam Iru Fushi, Maldives</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-400"></i>
+                </div>
+                <div onclick="selectExperience('Sun Siyam Iru Fushi, Maldives', 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=85')"
+                    class="p-3.5 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 cursor-pointer transition flex items-center justify-between text-xs font-bold text-neutral-800 shadow-sm">
+                    <span>Sun Siyam Iru Fushi, Maldives</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-400"></i>
+                </div>
+                <div onclick="selectExperience('Sun Siyam Iru Fushi, Maldives', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=85')"
+                    class="p-3.5 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 cursor-pointer transition flex items-center justify-between text-xs font-bold text-neutral-800 shadow-sm">
+                    <span>Sun Siyam Iru Fushi, Maldives</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-400"></i>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== SECTION: FREQUENTLY ASKED QUESTIONS ==================== -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-8 py-16">
+
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-[#111315] tracking-tight mb-10">
+            Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <div class="border-b border-neutral-200 pb-4">
+                <button onclick="toggleFaq('faq-1')"
+                    class="w-full flex items-center justify-between text-left py-2 text-sm sm:text-base font-bold text-neutral-900">
+                    <span>How do I book a trip through this website?</span>
+                    <i data-lucide="chevron-down" id="faq-1-icon"
+                        class="w-4 h-4 text-neutral-500 transition-transform"></i>
+                </button>
+                <div id="faq-1" class="hidden text-xs sm:text-sm text-neutral-500 mt-2 leading-relaxed">
+                    Simply browse through our handpicked destinations or search your desired dates using the booking
+                    bar. Choose your favorite villa or package, click "Book This Villa", and lock in your reservation
+                    without any upfront deposits.
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="border-b border-neutral-200 pb-4">
+                <button onclick="toggleFaq('faq-2')"
+                    class="w-full flex items-center justify-between text-left py-2 text-sm sm:text-base font-bold text-neutral-900">
+                    <span>What packages are available on this website?</span>
+                    <i data-lucide="chevron-down" id="faq-2-icon"
+                        class="w-4 h-4 text-neutral-500 transition-transform"></i>
+                </button>
+                <div id="faq-2" class="hidden text-xs sm:text-sm text-neutral-500 mt-2 leading-relaxed">
+                    We offer boutique island stays, private villa getaways, eco-friendly scooter exploration routes,
+                    diving and snorkeling passes, and curated culinary experiences across Southeast Asia.
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="border-b border-neutral-200 pb-4">
+                <button onclick="toggleFaq('faq-3')"
+                    class="w-full flex items-center justify-between text-left py-2 text-sm sm:text-base font-bold text-neutral-900">
+                    <span>Can I customize or reschedule my trip?</span>
+                    <i data-lucide="chevron-down" id="faq-3-icon"
+                        class="w-4 h-4 text-neutral-500 transition-transform"></i>
+                </button>
+                <div id="faq-3" class="hidden text-xs sm:text-sm text-neutral-500 mt-2 leading-relaxed">
+                    Yes! All reservations include flexible date modifications up to 48 hours before check-in, along with
+                    a dedicated TripNest concierge to tailor activities to your schedule.
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-white border-t border-neutral-200 py-12 px-4 sm:px-8 lg:px-12">
+        <div
+            class="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-500">
+
+            <div class="flex items-center space-x-3">
+                <span class="text-base font-bold text-neutral-900">Royal Tours &amp; Travels</span>
+                <span>• Curated Stays &amp; Memories</span>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="#hero" class="hover:text-neutral-900 transition">Trips</a>
+                <a href="#adventure" class="hover:text-neutral-900 transition">Adventures</a>
+                <a href="#gallery" class="hover:text-neutral-900 transition">Gallery</a>
+                <a href="#" class="hover:text-neutral-900 transition">Privacy</a>
+                <a href="#" class="hover:text-neutral-900 transition">Terms</a>
+            </div>
+
+            <div>
+                © 2026 The Royal Tours and Travels Inc. All rights reserved.
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- ==================== MODAL: SIGN IN / SIGN UP ==================== -->
+    <div id="modal-auth" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeModal('modal-auth')"
+                class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <h3 id="auth-modal-title" class="text-2xl font-bold text-neutral-900">Welcome to Royal Tours</h3>
+                <p class="text-xs text-neutral-500 mt-1">Unlock member pricing and complimentary villa upgrades.</p>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Email Address</label>
+                    <input type="email" required placeholder="contact@royaltours.com"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-neutral-900 focus:outline-none" />
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-neutral-700 uppercase mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-neutral-900 focus:outline-none" />
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-[#111315] hover:bg-neutral-800 text-white font-bold text-xs py-3.5 rounded-full transition shadow-md">
+                    Continue to Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ==================== SCRIPT LOGIC ==================== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Switch Hero Featured Visual & Tags
+        function switchHeroDestination(name, location, imgUrl, tags, cardEl) {
+            const heroImg = document.getElementById('hero-main-img');
+            const tagCluster = document.getElementById('hero-tag-cluster');
+
+            // Update Active Border
+            document.querySelectorAll('.thumb-card').forEach(c => {
+                c.classList.remove('border-neutral-900', 'shadow-md');
+                c.classList.add('border-transparent');
+            });
+            if (cardEl) {
+                cardEl.classList.add('border-neutral-900', 'shadow-md');
+                cardEl.classList.remove('border-transparent');
+            }
+
+            if (heroImg) {
+                heroImg.src = imgUrl;
+            }
+
+            if (tagCluster && tags) {
+                tagCluster.innerHTML = `
+          <div class="flex items-center space-x-2">
+            ${tags.slice(0, 2).map(t => `<span class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">${t}</span>`).join('')}
+          </div>
+          <div class="flex items-center space-x-2">
+            ${tags.slice(2, 5).map(t => `<span class="hero-glass-pill px-5 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer">${t}</span>`).join('')}
+          </div>
+        `;
+            }
+
+            showToast(`Showing: ${name} (${location})`);
+        }
+
+        // Experience Showcase Switcher
+        const experiences = [
+            { title: 'Sun Siyam Iru Fushi, Maldives', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1400&q=85' },
+            { title: 'Ayada Luxury Lagoon Retreat', img: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1400&q=85' },
+            { title: 'Ubud Rainforest Sanctum', img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=85' }
+        ];
+        let currentExpIndex = 0;
+
+        function shiftExperience(dir) {
+            currentExpIndex = (currentExpIndex + dir + experiences.length) % experiences.length;
+            const exp = experiences[currentExpIndex];
+            selectExperience(exp.title, exp.img);
+        }
+
+        function selectExperience(title, img) {
+            document.getElementById('experience-title').textContent = title;
+            document.getElementById('experience-img').src = img;
+            showToast(`Viewing: ${title}`);
+        }
+
+        // FAQ Accordion Toggler
+        function toggleFaq(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(`${id}-icon`);
+            if (el) {
+                el.classList.toggle('hidden');
+            }
+            if (icon) {
+                icon.classList.toggle('rotate-180');
+            }
+        }
+
+        // Modal Helpers
+        function openAuthModal(mode) {
+            document.getElementById('auth-modal-title').textContent = mode === 'signup' ? 'Create Royal Tours Account' : 'Sign in to Royal Tours';
+            const modal = document.getElementById('modal-auth');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            closeModal('modal-auth');
+            showToast("✨ Welcome back to Royal Tours & Travels!");
+        }
+
+        function triggerRoomSearch() {
+            showToast("🔍 Searching available Lagoon Villas for 1 Nov 2024...");
+        }
+
+        function openBookingDrawer(villa, price) {
+            showToast(`🎉 ${villa} held for 24h at ${price}! Check your inbox.`);
+        }
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toast-message');
+            msg.textContent = message;
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3200);
+        }
+    </script>
+    <!-- API Client & Form Submissions -->
+    <script src="js/api.js"></script>
+</body>
+
+</html>
